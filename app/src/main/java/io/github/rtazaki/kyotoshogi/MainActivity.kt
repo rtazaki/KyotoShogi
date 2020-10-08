@@ -15,10 +15,9 @@ class MainActivity : AppCompatActivity() {
     /**
      * ポジション ⇔ 画面
      * 画面配置的には、左上→右下だが、将棋は右上→左下
+     * (column:筋, row:段で表現。 )
      * 棋譜は筋段(列行)で表現するため、ソフト側も同じロジックで実装を行う。
      * まずは愚直に実装する。(id名から行列をパースするのはなお泥臭い。)
-     * @param column 筋
-     * @param row 段
      */
     private val mapPtoB by lazy {
         mapOf(
@@ -101,14 +100,19 @@ class MainActivity : AppCompatActivity() {
         for (b in mapBtoP.keys) {
             b.setOnClickListener {
                 if (turn) {
-                    if (b.text != "" && b.rotation != 180.0F) {
-                        Log.d("駒▲", "${b.text}")
-                        turn = false
+                    for (p in player1.getOnBoards()) {
+                        if (mapBtoP.getValue(b) == p.boardPos) {
+                            Log.d("駒▲", "${b.text}")
+                            turn = false
+                        }
                     }
                 } else {
-                    if (b.text != "" && b.rotation != 0.0F) {
-                        Log.d("駒△", "${b.text}")
-                        turn = true
+                    for (p in player2.getOnBoards()) {
+                        val mirrorPos = player2.getMirrorPos(p.boardPos)
+                        if (mapBtoP.getValue(b) == mirrorPos) {
+                            Log.d("駒△", "${b.text}")
+                            turn = true
+                        }
                     }
                 }
             }
