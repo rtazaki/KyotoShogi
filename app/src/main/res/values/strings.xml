@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">KyotoShogi</string>
+    <string name="app_name">京都将棋(香と銀角金桂飛歩)</string>
+    <string name="column5">5</string>
+    <string name="column4">4</string>
+    <string name="column3">3</string>
+    <string name="column2">2</string>
+    <string name="column1">1</string>
+    <string name="row1">一</string>
+    <string name="row2">二</string>
+    <string name="row3">三</string>
+    <string name="row4">四</string>
+    <string name="row5">五</string>
 </resources>
