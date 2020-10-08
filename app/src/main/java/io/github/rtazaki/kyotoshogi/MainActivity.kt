@@ -1,7 +1,6 @@
 package io.github.rtazaki.kyotoshogi
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.github.rtazaki.kyotoshogi.databinding.ActivityMainBinding
 
@@ -10,92 +9,52 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        /**
+         * 画面配置的には、左上→右下だが、将棋は右上→左下なので
+         * まずは泥臭く実装する。
+         * @param column 筋
+         * @param row 段
+         */
+        val posMap = mapOf(
+            Piece.Pos(1, 1) to binding.board11,
+            Piece.Pos(1, 2) to binding.board12,
+            Piece.Pos(1, 3) to binding.board13,
+            Piece.Pos(1, 4) to binding.board14,
+            Piece.Pos(1, 5) to binding.board15,
+            Piece.Pos(2, 1) to binding.board21,
+            Piece.Pos(2, 2) to binding.board22,
+            Piece.Pos(2, 3) to binding.board23,
+            Piece.Pos(2, 4) to binding.board24,
+            Piece.Pos(2, 5) to binding.board25,
+            Piece.Pos(3, 1) to binding.board31,
+            Piece.Pos(3, 2) to binding.board32,
+            Piece.Pos(3, 3) to binding.board33,
+            Piece.Pos(3, 4) to binding.board34,
+            Piece.Pos(3, 5) to binding.board35,
+            Piece.Pos(4, 1) to binding.board41,
+            Piece.Pos(4, 2) to binding.board42,
+            Piece.Pos(4, 3) to binding.board43,
+            Piece.Pos(4, 4) to binding.board44,
+            Piece.Pos(4, 5) to binding.board45,
+            Piece.Pos(5, 1) to binding.board51,
+            Piece.Pos(5, 2) to binding.board52,
+            Piece.Pos(5, 3) to binding.board53,
+            Piece.Pos(5, 4) to binding.board54,
+            Piece.Pos(5, 5) to binding.board55,
+        )
+        // 初期配置
+        val player1 = Player()
+        for (p in player1.getOnBoards()) {
+            posMap.getValue(p.boardPos).text = p.onBoards
+        }
+        val player2 = Player()
+        for (p in player2.getOnBoards()) {
+            val mirrorPos = Piece.getMirrorPos(p.boardPos)
+            posMap.getValue(mirrorPos).text = p.onBoards
+            posMap.getValue(mirrorPos).rotation = 180.0F
+        }
         // 駒操作
-        binding.iv11.setOnClickListener {
-            common(5, 1)
+        binding.board51.setOnClickListener {
         }
-        binding.iv12.setOnClickListener {
-            common(4, 1)
-        }
-        binding.iv13.setOnClickListener {
-            common(3, 1)
-        }
-        binding.iv14.setOnClickListener {
-            common(2, 1)
-        }
-        binding.iv15.setOnClickListener {
-            common(1, 1)
-        }
-        binding.iv21.setOnClickListener {
-            common(5, 2)
-        }
-        binding.iv22.setOnClickListener {
-            common(4, 2)
-        }
-        binding.iv23.setOnClickListener {
-            common(3, 2)
-        }
-        binding.iv24.setOnClickListener {
-            common(2, 2)
-        }
-        binding.iv25.setOnClickListener {
-            common(1, 2)
-        }
-        binding.iv31.setOnClickListener {
-            common(5, 3)
-        }
-        binding.iv32.setOnClickListener {
-            common(4, 3)
-        }
-        binding.iv33.setOnClickListener {
-            common(3, 3)
-        }
-        binding.iv34.setOnClickListener {
-            common(2, 3)
-        }
-        binding.iv35.setOnClickListener {
-            common(1, 3)
-        }
-        binding.iv41.setOnClickListener {
-            common(5, 4)
-        }
-        binding.iv42.setOnClickListener {
-            common(4, 4)
-        }
-        binding.iv43.setOnClickListener {
-            common(3, 4)
-        }
-        binding.iv44.setOnClickListener {
-            common(2, 4)
-        }
-        binding.iv45.setOnClickListener {
-            common(1, 4)
-        }
-        binding.iv51.setOnClickListener {
-            common(5, 5)
-        }
-        binding.iv52.setOnClickListener {
-            common(4, 5)
-        }
-        binding.iv53.setOnClickListener {
-            common(3, 5)
-        }
-        binding.iv54.setOnClickListener {
-            common(2, 5)
-        }
-        binding.iv55.setOnClickListener {
-            common(1, 5)
-        }
-    }
-
-    /**
-     * 画面配置的には、左上→右下だが、将棋は右上→左下なのでボタンイベントを置き換える。
-     * まずは泥臭く実装する。
-     * (グループ化して、クリックリスナーでまとめるのが一番いい気がする。)
-     * @param column 筋
-     * @param row 段
-     */
-    private fun common(column: Int, row: Int) {
-        Log.d("駒", "column: $column   row: $row")
     }
 }
