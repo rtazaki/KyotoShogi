@@ -1,37 +1,13 @@
-## Welcome to GitHub Pages
+## 京都将棋アプリを作成しようと思ったきっかけ
+- 本将棋の駒では代用できないし、ルールも将棋と少し違うため勉強に良いと思った。
+- 当初はWebアプリ化を目指すつもりだったが、一番手近な環境がAndroid+Kotlinだったため、
+まずは実装してから考えようと思い立った。
 
-You can use the [editor on GitHub](https://github.com/rtazaki/KyotoShogi/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## 遊び方
+- 現状Android Studio上で遊ぶことしかできない。
+- 将来的に、Google Appsに上げることを目標としている。
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/rtazaki/KyotoShogi/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## 最終的にやりたい事
+- KIF形式で棋譜データを保存する。
+- undo/redoをつけて、検討できるようにする。
+- comを作る。
