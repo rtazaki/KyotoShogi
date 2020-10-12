@@ -59,7 +59,7 @@ class MainGame {
                 // 2段飛び斜め
                 if (p.boardPos.row > 2) {
                     val row = p.boardPos.row - 2
-                    listOf(p.boardPos.column - 1, p.boardPos.column + 1).takeWhile { it in 1..5 }
+                    listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
@@ -70,7 +70,7 @@ class MainGame {
                 // 上三方向
                 if (p.boardPos.row > 1) {
                     val row = p.boardPos.row - 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).takeWhile { it in 1..5 }
+                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
@@ -79,7 +79,7 @@ class MainGame {
                 // 斜め下
                 if (p.boardPos.row < 5) {
                     val row = p.boardPos.row + 1
-                    listOf(p.boardPos.column - 1, p.boardPos.column + 1).takeWhile { it in 1..5 }
+                    listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
@@ -90,14 +90,14 @@ class MainGame {
                 // 上三方向
                 if (p.boardPos.row > 1) {
                     val row = p.boardPos.row - 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).takeWhile { it in 1..5 }
+                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
                 }
                 // 左右
-                listOf(p.boardPos.column - 1, p.boardPos.column + 1).takeWhile { it in 1..5 }
+                listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
                     .forEach { column ->
                         val row = p.boardPos.row
                         // 自駒にぶつかったら終了
@@ -115,14 +115,14 @@ class MainGame {
                 // 上三方向
                 if (p.boardPos.row > 1) {
                     val row = p.boardPos.row - 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).takeWhile { it in 1..5 }
+                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
                 }
                 // 左右
-                listOf(p.boardPos.column - 1, p.boardPos.column + 1).takeWhile { it in 1..5 }
+                listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
                     .forEach { column ->
                         val row = p.boardPos.row
                         // 自駒にぶつかったら終了
@@ -131,7 +131,7 @@ class MainGame {
                 // 下三方向
                 if (p.boardPos.row < 5) {
                     val row = p.boardPos.row + 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).takeWhile { it in 1..5 }
+                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
