@@ -118,6 +118,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     if (pos == mapBtoP.getValue(b)) {
                         Log.d("駒", "選択: ${b.text}")
+                        b.setBackgroundResource(R.drawable.button_background_select)
                         player.getValue(turn).selectPos = p.boardPos
                         player.getValue(turn).movePos =
                             FieldPiece.getMovePos(
