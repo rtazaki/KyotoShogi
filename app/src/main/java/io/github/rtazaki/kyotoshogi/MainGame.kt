@@ -15,10 +15,10 @@ class MainGame {
         ),
         var movePos: MutableList<Pos> = mutableListOf(),
         var selectPos: Pos = Pos(0, 0),
-        var hands: MutableList<String> = mutableListOf()
+        var latest: Pos = Pos(0, 0),
     )
 
-    data class PiecePos(val onBoards: String, val boardPos: Pos)
+    data class PiecePos(var onBoards: CharSequence, var boardPos: Pos)
     data class Pos(val column: Int, val row: Int)
 
     /**
@@ -28,6 +28,66 @@ class MainGame {
      */
     fun getMirrorPos(pos: Pos): Pos {
         return Pos(6 - pos.column, 6 - pos.row)
+    }
+
+    /**
+     * 駒移動
+     * @param p1 自分駒情報
+     * @param p2 相手駒情報
+     */
+    fun clearMoveSelect(p1: Player, p2: Player) {
+        p1.movePos.clear()
+        p1.selectPos = Pos(0, 0)
+        p2.movePos.clear()
+        p2.selectPos = Pos(0, 0)
+    }
+
+    /**
+     * 駒反転処理
+     * @param name 駒名
+     * @return 変換駒名
+     */
+    fun invertPiece(name: CharSequence): CharSequence {
+        return when (name) {
+            "香" -> "と"
+            "と" -> "香"
+            "銀" -> "角"
+            "角" -> "銀"
+            "金" -> "桂"
+            "桂" -> "金"
+            "飛" -> "歩"
+            "歩" -> "飛"
+            else -> "玉"
+        }
+    }
+
+    /**
+     * 駒移動
+     * @param m 選択位置
+     * @param p1 自分駒情報
+     * @param p2 相手駒情報
+     * @param mirror 反転
+     */
+    fun changePiece(m: Pos, p1: Player, p2: Player, mirror: Boolean) {
+        run loop@{
+            p1.piecePos.forEach { p ->
+                if (mirror) {
+                    if (p.boardPos == getMirrorPos(p1.selectPos)) {
+                        p.onBoards = invertPiece(p.onBoards)
+                        p.boardPos = getMirrorPos(m)
+                        p1.latest = m
+                        return@loop
+                    }
+                } else {
+                    if (p.boardPos == p1.selectPos) {
+                        p.onBoards = invertPiece(p.onBoards)
+                        p.boardPos = m
+                        p1.latest = p.boardPos
+                        return@loop
+                    }
+                }
+            }
+        }
     }
 
     /**
