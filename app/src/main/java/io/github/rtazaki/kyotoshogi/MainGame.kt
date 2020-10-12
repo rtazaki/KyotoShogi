@@ -6,19 +6,19 @@ package io.github.rtazaki.kyotoshogi
  */
 class MainGame {
     data class Player(
-        var piecePos: MutableList<PiecePos> = mutableListOf(
-            PiecePos("と", Pos(5, 5)),
-            PiecePos("銀", Pos(4, 5)),
-            PiecePos("玉", Pos(3, 5)),
-            PiecePos("金", Pos(2, 5)),
-            PiecePos("歩", Pos(1, 5)),
+        var piece: MutableList<Piece> = mutableListOf(
+            Piece("と", Pos(5, 5)),
+            Piece("銀", Pos(4, 5)),
+            Piece("玉", Pos(3, 5)),
+            Piece("金", Pos(2, 5)),
+            Piece("歩", Pos(1, 5)),
         ),
-        var movePos: MutableList<Pos> = mutableListOf(),
-        var selectPos: Pos = Pos(0, 0),
+        var move: MutableList<Pos> = mutableListOf(),
+        var select: Pos = Pos(0, 0),
         var latest: Pos = Pos(0, 0),
     )
 
-    data class PiecePos(var onBoards: CharSequence, var boardPos: Pos)
+    data class Piece(var name: CharSequence, var pos: Pos)
     data class Pos(val column: Int, val row: Int)
 
     /**
@@ -36,10 +36,10 @@ class MainGame {
      * @param p2 相手駒情報
      */
     fun clearMoveSelect(p1: Player, p2: Player) {
-        p1.movePos.clear()
-        p1.selectPos = Pos(0, 0)
-        p2.movePos.clear()
-        p2.selectPos = Pos(0, 0)
+        p1.move.clear()
+        p1.select = Pos(0, 0)
+        p2.move.clear()
+        p2.select = Pos(0, 0)
     }
 
     /**
@@ -70,19 +70,19 @@ class MainGame {
      */
     fun changePiece(m: Pos, p1: Player, p2: Player, mirror: Boolean) {
         run loop@{
-            p1.piecePos.forEach { p ->
+            p1.piece.forEach { p ->
                 if (mirror) {
-                    if (p.boardPos == getMirrorPos(p1.selectPos)) {
-                        p.onBoards = invertPiece(p.onBoards)
-                        p.boardPos = getMirrorPos(m)
+                    if (p.pos == getMirrorPos(p1.select)) {
+                        p.name = invertPiece(p.name)
+                        p.pos = getMirrorPos(m)
                         p1.latest = m
                         return@loop
                     }
                 } else {
-                    if (p.boardPos == p1.selectPos) {
-                        p.onBoards = invertPiece(p.onBoards)
-                        p.boardPos = m
-                        p1.latest = p.boardPos
+                    if (p.pos == p1.select) {
+                        p.name = invertPiece(p.name)
+                        p.pos = m
+                        p1.latest = p.pos
                         return@loop
                     }
                 }
@@ -99,27 +99,27 @@ class MainGame {
      * @return 移動可能範囲
      */
     fun getMovePos(
-        p: PiecePos,
+        p: Piece,
         p1: Player,
         p2: Player,
         mirror: Boolean
     ): MutableList<Pos> {
         val move = mutableListOf<Pos>()
-        when (p.onBoards) {
+        when (p.name) {
             "歩" -> {
                 // 縦に一歩
-                if (p.boardPos.row > 1) {
-                    val row = p.boardPos.row - 1
-                    val column = p.boardPos.column
+                if (p.pos.row > 1) {
+                    val row = p.pos.row - 1
+                    val column = p.pos.column
                     // 自駒にぶつかったら終了
                     myPiece(p1, column, row, mirror, move)
                 }
             }
             "桂" -> {
                 // 2段飛び斜め
-                if (p.boardPos.row > 2) {
-                    val row = p.boardPos.row - 2
-                    listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
+                if (p.pos.row > 2) {
+                    val row = p.pos.row - 2
+                    listOf(p.pos.column - 1, p.pos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
@@ -128,18 +128,18 @@ class MainGame {
             }
             "銀" -> {
                 // 上三方向
-                if (p.boardPos.row > 1) {
-                    val row = p.boardPos.row - 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
+                if (p.pos.row > 1) {
+                    val row = p.pos.row - 1
+                    (p.pos.column - 1..p.pos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
                 }
                 // 斜め下
-                if (p.boardPos.row < 5) {
-                    val row = p.boardPos.row + 1
-                    listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
+                if (p.pos.row < 5) {
+                    val row = p.pos.row + 1
+                    listOf(p.pos.column - 1, p.pos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
@@ -148,50 +148,50 @@ class MainGame {
             }
             "と", "金" -> {
                 // 上三方向
-                if (p.boardPos.row > 1) {
-                    val row = p.boardPos.row - 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
+                if (p.pos.row > 1) {
+                    val row = p.pos.row - 1
+                    (p.pos.column - 1..p.pos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
                 }
                 // 左右
-                listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
+                listOf(p.pos.column - 1, p.pos.column + 1).filter { it in 1..5 }
                     .forEach { column ->
-                        val row = p.boardPos.row
+                        val row = p.pos.row
                         // 自駒にぶつかったら終了
                         myPiece(p1, column, row, mirror, move)
                     }
                 // 下
-                if (p.boardPos.row < 5) {
-                    val row = p.boardPos.row + 1
-                    val column = p.boardPos.column
+                if (p.pos.row < 5) {
+                    val row = p.pos.row + 1
+                    val column = p.pos.column
                     // 自駒にぶつかったら終了
                     myPiece(p1, column, row, mirror, move)
                 }
             }
             "玉" -> {
                 // 上三方向
-                if (p.boardPos.row > 1) {
-                    val row = p.boardPos.row - 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
+                if (p.pos.row > 1) {
+                    val row = p.pos.row - 1
+                    (p.pos.column - 1..p.pos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
                 }
                 // 左右
-                listOf(p.boardPos.column - 1, p.boardPos.column + 1).filter { it in 1..5 }
+                listOf(p.pos.column - 1, p.pos.column + 1).filter { it in 1..5 }
                     .forEach { column ->
-                        val row = p.boardPos.row
+                        val row = p.pos.row
                         // 自駒にぶつかったら終了
                         myPiece(p1, column, row, mirror, move)
                     }
                 // 下三方向
-                if (p.boardPos.row < 5) {
-                    val row = p.boardPos.row + 1
-                    (p.boardPos.column - 1..p.boardPos.column + 1).filter { it in 1..5 }
+                if (p.pos.row < 5) {
+                    val row = p.pos.row + 1
+                    (p.pos.column - 1..p.pos.column + 1).filter { it in 1..5 }
                         .forEach { column ->
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
@@ -201,8 +201,8 @@ class MainGame {
             "香" -> {
                 // 縦に真っ直ぐ
                 run loop@{
-                    val column = p.boardPos.column
-                    (p.boardPos.row - 1 downTo 1).forEach { row ->
+                    val column = p.pos.column
+                    (p.pos.row - 1 downTo 1).forEach { row ->
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
@@ -213,8 +213,8 @@ class MainGame {
             "角" -> {
                 // 左上
                 run loop@{
-                    var column = p.boardPos.column + 1
-                    var row = p.boardPos.row - 1
+                    var column = p.pos.column + 1
+                    var row = p.pos.row - 1
                     while (column <= 5 && row >= 1) {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
@@ -226,8 +226,8 @@ class MainGame {
                 }
                 // 左下
                 run loop@{
-                    var column = p.boardPos.column + 1
-                    var row = p.boardPos.row + 1
+                    var column = p.pos.column + 1
+                    var row = p.pos.row + 1
                     while (column <= 5 && row <= 5) {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
@@ -239,8 +239,8 @@ class MainGame {
                 }
                 // 右上
                 run loop@{
-                    var column = p.boardPos.column - 1
-                    var row = p.boardPos.row - 1
+                    var column = p.pos.column - 1
+                    var row = p.pos.row - 1
                     while (column >= 1 && row >= 1) {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
@@ -252,8 +252,8 @@ class MainGame {
                 }
                 // 右下
                 run loop@{
-                    var column = p.boardPos.column - 1
-                    var row = p.boardPos.row + 1
+                    var column = p.pos.column - 1
+                    var row = p.pos.row + 1
                     while (column >= 1 && row <= 5) {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
@@ -267,8 +267,8 @@ class MainGame {
             "飛" -> {
                 // 上
                 run loop@{
-                    val column = p.boardPos.column
-                    (p.boardPos.row - 1 downTo 1).forEach { row ->
+                    val column = p.pos.column
+                    (p.pos.row - 1 downTo 1).forEach { row ->
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
@@ -277,8 +277,8 @@ class MainGame {
                 }
                 // 下
                 run loop@{
-                    val column = p.boardPos.column
-                    (p.boardPos.row + 1..5).forEach { row ->
+                    val column = p.pos.column
+                    (p.pos.row + 1..5).forEach { row ->
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
@@ -287,8 +287,8 @@ class MainGame {
                 }
                 // 左
                 run loop@{
-                    val row = p.boardPos.row
-                    (p.boardPos.column + 1..5).forEach { column ->
+                    val row = p.pos.row
+                    (p.pos.column + 1..5).forEach { column ->
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
@@ -297,8 +297,8 @@ class MainGame {
                 }
                 // 右
                 run loop@{
-                    val row = p.boardPos.row
-                    (p.boardPos.column - 1 downTo 1).forEach { column ->
+                    val row = p.pos.row
+                    (p.pos.column - 1 downTo 1).forEach { column ->
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
@@ -328,8 +328,8 @@ class MainGame {
     ): Boolean {
         var ret = false
         run loop@{
-            player.piecePos.forEach {
-                if (it.boardPos == Pos(column, row)) {
+            player.piece.forEach {
+                if (it.pos == Pos(column, row)) {
                     ret = true
                     return@loop
                 }
@@ -361,8 +361,8 @@ class MainGame {
     ): Boolean {
         var ret = false
         run loop@{
-            player.piecePos.forEach {
-                val mirrorPos = getMirrorPos(it.boardPos)
+            player.piece.forEach {
+                val mirrorPos = getMirrorPos(it.pos)
                 if (mirrorPos == Pos(column, row)) {
                     if (mirror) {
                         move.add(getMirrorPos(Pos(column, row)))
