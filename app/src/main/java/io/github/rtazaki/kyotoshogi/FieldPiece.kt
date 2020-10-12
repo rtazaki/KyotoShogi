@@ -7,7 +7,7 @@ object FieldPiece {
         p: Player.PiecePos,
         p1: Player,
         p2: Player,
-        mirror: Boolean = false
+        mirror: Boolean
     ): MutableList<Pos> {
         val move = mutableListOf<Pos>()
         when (p.onBoards) {
