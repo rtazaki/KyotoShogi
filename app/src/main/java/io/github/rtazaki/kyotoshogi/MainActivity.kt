@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         val mainGame = MainGame()
+        val rotation = mapOf(true to 0.0F, false to 180.0F)
         // 初期配置
         player.forEach { (turn, player) ->
             player.piecePos.forEach { p ->
@@ -99,11 +100,10 @@ class MainActivity : AppCompatActivity() {
                     mainGame.getMirrorPos(p.boardPos)
                 }
                 mapPtoB.getValue(pos).text = p.onBoards
-                if (!turn) {
-                    mapPtoB.getValue(pos).rotation = 180.0F
-                }
+                mapPtoB.getValue(pos).rotation = rotation.getValue(turn)
             }
         }
+        // 盤処理
         mapBtoP.keys.forEach { b ->
             b.setOnClickListener {
                 player.getValue(turn).movePos.forEach { m ->
