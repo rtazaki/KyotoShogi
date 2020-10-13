@@ -79,6 +79,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * 持ち駒
+     */
+    private val hands by lazy {
+        mapOf(
+            true to listOf(
+                binding.player1Hands1,
+                binding.player1Hands2,
+                binding.player1Hands3,
+                binding.player1Hands4,
+            ),
+            false to listOf(
+                binding.player2Hands1,
+                binding.player2Hands2,
+                binding.player2Hands3,
+                binding.player2Hands4,
+            )
+        )
+    }
+
+    /**
      * 手番
      * true: player1(先手)
      * false: player2(後手)
@@ -106,20 +126,24 @@ class MainActivity : AppCompatActivity() {
         // 盤処理
         mapBtoP.keys.forEach { b ->
             b.setOnClickListener {
-                player.getValue(turn).move.forEach { m ->
-                    if (m == mapBtoP.getValue(b)) {
-                        Log.d("駒", "ターン変更: ${mapBtoP.getValue(b)}")
-                        mapPtoB.getValue(m).text =
-                            mainGame.invertPiece(mapPtoB.getValue(player.getValue(turn).select).text)
-                        mapPtoB.getValue(m).rotation = rotation.getValue(turn)
-                        mapPtoB.getValue(player.getValue(turn).select).text = ""
-                        mainGame.changePiece(
-                            m,
-                            player.getValue(turn),
-                            player.getValue(!turn),
-                            mirror = !turn
-                        )
-                        turn = !turn
+                run loop@{
+                    player.getValue(turn).move.forEach { m ->
+                        if (m == mapBtoP.getValue(b)) {
+                            Log.d("駒", "ターン変更: ${mapBtoP.getValue(b)}")
+                            mapPtoB.getValue(m).text =
+                                mainGame.invertPiece(mapPtoB.getValue(player.getValue(turn).select).text)
+                            mapPtoB.getValue(m).rotation = rotation.getValue(turn)
+                            mapPtoB.getValue(player.getValue(turn).select).text = ""
+                            mainGame.changePiece(m, player.getValue(turn), mirror = !turn)
+                            // 持ち駒更新
+                            val convertHandsName =
+                                mainGame.changeEnemyPiece(m, player.getValue(!turn), mirror = turn)
+                            if (convertHandsName != "") {
+                                updateHands(convertHandsName)
+                            }
+                            turn = !turn
+                            return@loop
+                        }
                     }
                 }
                 mapBtoP.keys.forEach { it.setBackgroundResource(R.drawable.button_background) }
@@ -136,18 +160,38 @@ class MainActivity : AppCompatActivity() {
                         Log.d("駒", "選択: ${b.text}")
                         b.setBackgroundResource(R.drawable.button_background_select)
                         player.getValue(turn).select = pos
-                        player.getValue(turn).move = mainGame.getMovePos(
-                            p,
-                            player.getValue(turn),
-                            player.getValue(!turn),
-                            mirror = !turn
-                        )
+                        player.getValue(turn).move =
+                            mainGame.getMovePos(
+                                p,
+                                player.getValue(turn),
+                                player.getValue(!turn),
+                                mirror = !turn
+                            )
                         Log.d("駒", "稼働範囲: ${player.getValue(turn).move}")
                         player.getValue(turn).move.forEach { m ->
                             mapPtoB.getValue(m)
                                 .setBackgroundResource(R.drawable.button_background_move)
                         }
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * 持ち駒更新
+     * @param convertHandsName 持ち駒
+     */
+    private fun updateHands(convertHandsName: CharSequence) {
+        run loop@{
+            hands.getValue(turn).forEach {
+                if (it.text == "") {
+                    it.text = convertHandsName
+                    return@loop
+                } else if (it.text == convertHandsName) {
+                    val tmp = "${convertHandsName}×2"
+                    it.text = tmp
+                    return@loop
                 }
             }
         }

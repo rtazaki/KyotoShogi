@@ -64,29 +64,70 @@ class MainGame {
     /**
      * 駒移動
      * @param m 選択位置
-     * @param p1 自分駒情報
-     * @param p2 相手駒情報
+     * @param player 自分駒情報
      * @param mirror 反転
      */
-    fun changePiece(m: Pos, p1: Player, p2: Player, mirror: Boolean) {
+    fun changePiece(m: Pos, player: Player, mirror: Boolean) {
         run loop@{
-            p1.piece.forEach { p ->
+            player.piece.forEach { p ->
                 if (mirror) {
-                    if (p.pos == getMirrorPos(p1.select)) {
-                        p.name = invertPiece(p.name)
+                    if (p.pos == getMirrorPos(player.select)) {
                         p.pos = getMirrorPos(m)
-                        p1.latest = m
+                        p.name = invertPiece(p.name)
+                        player.latest = m
                         return@loop
                     }
                 } else {
-                    if (p.pos == p1.select) {
-                        p.name = invertPiece(p.name)
+                    if (p.pos == player.select) {
                         p.pos = m
-                        p1.latest = p.pos
+                        p.name = invertPiece(p.name)
+                        player.latest = m
                         return@loop
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * 持ち駒取得処理
+     * @param m 選択位置
+     * @param player 相手駒情報
+     * @param mirror 反転
+     */
+    fun changeEnemyPiece(m: Pos, player: Player, mirror: Boolean): CharSequence {
+        var ret: CharSequence = ""
+        run loop@{
+            player.piece.forEachIndexed { i, p ->
+                if (mirror) {
+                    if (p.pos == getMirrorPos(m)) {
+                        ret = convertHandsName(p.name)
+                        player.piece.removeAt(i)
+                        return@loop
+                    }
+                } else {
+                    if (p.pos == m) {
+                        ret = convertHandsName(p.name)
+                        player.piece.removeAt(i)
+                        return@loop
+                    }
+                }
+            }
+        }
+        return ret
+    }
+
+    /**
+     * 持ち駒共通化
+     * @param name 駒名
+     */
+    private fun convertHandsName(name: CharSequence): CharSequence {
+        return when (name) {
+            "香", "と" -> "香"
+            "銀", "角" -> "銀"
+            "金", "桂" -> "金"
+            "飛", "歩" -> "飛"
+            else -> "玉"
         }
     }
 
