@@ -12,42 +12,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.30" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.45" />
+        app:layout_constraintGuide_percent="0.40" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.60" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.70" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <!-- ガイドライン(horizontal) -->
     <androidx.constraintlayout.widget.Guideline
@@ -111,8 +111,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.80" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_h9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.90" />
     <!-- 盤ラベル(筋) -->
     <TextView
         android:layout_width="wrap_content"
@@ -158,122 +164,128 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/row1"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h3"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/board11"
         app:layout_constraintTop_toTopOf="@+id/guideline_h2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/row2"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_v5"
         app:layout_constraintTop_toTopOf="@+id/guideline_h3" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/row3"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h5"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_v5"
         app:layout_constraintTop_toTopOf="@+id/guideline_h4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/row4"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h6"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_v5"
         app:layout_constraintTop_toTopOf="@+id/guideline_h5" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/row5"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h7"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline_v5"
         app:layout_constraintTop_toTopOf="@+id/guideline_h6" />
 
     <!-- 手駒(持ち駒) -->
-    <TextView
+    <Button
         android:id="@+id/player1_hands1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_h8"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_h9"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v1"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_v0"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h7"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_h8" />
 
-    <TextView
+    <Button
         android:id="@+id/player1_hands2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_h8"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_h9"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v2"
         app:layout_constraintStart_toStartOf="@+id/guideline_v1"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h7" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_h8" />
 
-    <TextView
+    <Button
         android:id="@+id/player1_hands3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_h8"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_h9"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v3"
         app:layout_constraintStart_toStartOf="@+id/guideline_v2"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h7" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_h8" />
 
-    <TextView
+    <Button
         android:id="@+id/player1_hands4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_h8"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_h9"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v4"
         app:layout_constraintStart_toStartOf="@+id/guideline_v3"
-        app:layout_constraintTop_toTopOf="@+id/guideline_h7" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_h8" />
 
     <!-- 手駒(相手) -->
-    <TextView
+    <Button
         android:id="@+id/player2_hands1"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/button_background"
         android:rotation="180.0"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h1"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v1"
         app:layout_constraintStart_toStartOf="@+id/guideline_v0"
         app:layout_constraintTop_toTopOf="@+id/guideline_h0" />
 
-    <TextView
+    <Button
         android:id="@+id/player2_hands2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/button_background"
         android:rotation="180.0"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h1"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v2"
         app:layout_constraintStart_toStartOf="@+id/guideline_v1"
         app:layout_constraintTop_toTopOf="@+id/guideline_h0" />
 
-    <TextView
+    <Button
         android:id="@+id/player2_hands3"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/button_background"
         android:rotation="180.0"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h1"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v3"
         app:layout_constraintStart_toStartOf="@+id/guideline_v2"
         app:layout_constraintTop_toTopOf="@+id/guideline_h0" />
 
-    <TextView
+    <Button
         android:id="@+id/player2_hands4"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/button_background"
         android:rotation="180.0"
         app:layout_constraintBottom_toTopOf="@+id/guideline_h1"
         app:layout_constraintEnd_toStartOf="@+id/guideline_v4"
