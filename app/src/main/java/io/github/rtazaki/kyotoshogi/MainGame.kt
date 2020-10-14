@@ -15,7 +15,6 @@ class MainGame {
         ),
         var move: MutableList<Pos> = mutableListOf(),
         var select: Pos = Pos(0, 0),
-        var latest: Pos = Pos(0, 0),
     )
 
     data class Piece(var name: CharSequence, var pos: Pos)
@@ -74,14 +73,12 @@ class MainGame {
                     if (p.pos == getMirrorPos(player.select)) {
                         p.pos = getMirrorPos(m)
                         p.name = invertPiece(p.name)
-                        player.latest = m
                         return@loop
                     }
                 } else {
                     if (p.pos == player.select) {
                         p.pos = m
                         p.name = invertPiece(p.name)
-                        player.latest = m
                         return@loop
                     }
                 }

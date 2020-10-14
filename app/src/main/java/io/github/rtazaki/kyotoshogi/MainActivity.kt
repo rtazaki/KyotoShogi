@@ -107,6 +107,11 @@ class MainActivity : AppCompatActivity() {
      */
     private var turn = true
 
+    /**
+     * 最後に動かした駒
+     */
+    private var latest = MainGame.Pos(0, 0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -141,6 +146,7 @@ class MainActivity : AppCompatActivity() {
                             if (convertHandsName != "") {
                                 updateHands(convertHandsName)
                             }
+                            latest = m
                             turn = !turn
                             return@loop
                         }
