@@ -152,12 +152,8 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-                mapBtoP.keys.forEach { it.setBackgroundResource(R.drawable.button_background) }
-                if (player.getValue(!turn).latest != MainGame.Pos(0, 0)) {
-                    mapPtoB.getValue(player.getValue(!turn).latest)
-                        .setBackgroundResource(R.drawable.button_background_latest)
-                }
-                mainGame.clearMoveSelect(player.getValue(turn), player.getValue(!turn))
+                refreshBoard()
+                mainGame.clearMoveSelect(player)
                 player.getValue(turn).piece.forEach { p ->
                     val pos = if (turn) p.pos else {
                         mainGame.getMirrorPos(p.pos)
@@ -191,7 +187,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateHands(convertHandsName: CharSequence) {
         run loop@{
             hands.getValue(turn).forEach {
-                if (it.text == "") {
+                if (it.text.isBlank()) {
                     it.text = convertHandsName
                     return@loop
                 } else if (it.text == convertHandsName) {
@@ -200,6 +196,17 @@ class MainActivity : AppCompatActivity() {
                     return@loop
                 }
             }
+        }
+    }
+
+    /**
+     * 盤面リフレッシュ
+     */
+    private fun refreshBoard() {
+        mapBtoP.keys.forEach { it.setBackgroundResource(R.drawable.button_background) }
+        if (latest != MainGame.Pos(0, 0)) {
+            mapPtoB.getValue(latest)
+                .setBackgroundResource(R.drawable.button_background_latest)
         }
     }
 }

@@ -31,14 +31,13 @@ class MainGame {
 
     /**
      * 駒移動
-     * @param p1 自分駒情報
-     * @param p2 相手駒情報
+     * @param player プレイヤー情報
      */
-    fun clearMoveSelect(p1: Player, p2: Player) {
-        p1.move.clear()
-        p1.select = Pos(0, 0)
-        p2.move.clear()
-        p2.select = Pos(0, 0)
+    fun clearMoveSelect(player: Map<Boolean, Player>) {
+        player.values.forEach {
+            it.move.clear()
+            it.select = Pos(0, 0)
+        }
     }
 
     /**
