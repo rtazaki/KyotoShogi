@@ -128,6 +128,17 @@ class MainActivity : AppCompatActivity() {
                 mapPtoB.getValue(pos).rotation = rotation.getValue(turn)
             }
         }
+        // 打ち駒
+        hands.forEach { (key, value) ->
+            value.forEach { hands ->
+                hands.setOnClickListener {
+                    if (key == turn && hands.text.isNotBlank()) {
+                        val dialog = PutPieceDialogFragment(hands.text)
+                        dialog.show(supportFragmentManager, "PPDialog")
+                    }
+                }
+            }
+        }
         // 盤処理
         mapBtoP.keys.forEach { b ->
             b.setOnClickListener {
