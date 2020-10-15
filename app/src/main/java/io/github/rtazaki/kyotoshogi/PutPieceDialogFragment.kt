@@ -3,7 +3,6 @@ package io.github.rtazaki.kyotoshogi
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 
 class PutPieceDialogFragment(piece: CharSequence) : DialogFragment() {
@@ -19,7 +18,8 @@ class PutPieceDialogFragment(piece: CharSequence) : DialogFragment() {
         val builder = AlertDialog.Builder(activity)
             .setTitle("駒を選んでください")
             .setItems(items) { _, which ->
-                Log.d("駒", "which: $which")
+                val mainActivity = activity as MainActivity
+                mainActivity.getPutPiece(items[which])
             }
             .setNegativeButton("Cancel", null)
         return builder.create()

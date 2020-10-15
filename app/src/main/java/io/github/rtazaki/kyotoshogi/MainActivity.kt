@@ -112,6 +112,10 @@ class MainActivity : AppCompatActivity() {
      */
     private var latest = MainGame.Pos(0, 0)
 
+    fun getPutPiece(putPiece: CharSequence) {
+        Log.d("駒", "putPiece: $putPiece")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
