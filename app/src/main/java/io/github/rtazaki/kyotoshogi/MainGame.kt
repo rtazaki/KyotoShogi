@@ -1,10 +1,10 @@
 package io.github.rtazaki.kyotoshogi
 
 /**
- * MainGameクラス
+ * MainGameクラス(オブジェクト)
  * 京都将棋のゲーム要素は、このクラスに集約する。
  */
-class MainGame {
+object MainGame {
     data class Player(
         var piece: MutableList<Piece> = mutableListOf(
             Piece("と", Pos(5, 5)),

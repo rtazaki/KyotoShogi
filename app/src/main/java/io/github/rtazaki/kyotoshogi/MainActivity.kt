@@ -120,13 +120,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        val mainGame = MainGame()
         val rotation = mapOf(true to 0.0F, false to 180.0F)
         // 初期配置
         player.forEach { (turn, player) ->
             player.piece.forEach { p ->
                 val pos = if (turn) p.pos else {
-                    mainGame.getMirrorPos(p.pos)
+                    MainGame.getMirrorPos(p.pos)
                 }
                 mapPtoB.getValue(pos).text = p.name
                 mapPtoB.getValue(pos).rotation = rotation.getValue(turn)
@@ -151,13 +150,13 @@ class MainActivity : AppCompatActivity() {
                         if (m == mapBtoP.getValue(b)) {
                             Log.d("駒", "ターン変更: ${mapBtoP.getValue(b)}")
                             mapPtoB.getValue(m).text =
-                                mainGame.invertPiece(mapPtoB.getValue(player.getValue(turn).select).text)
+                                MainGame.invertPiece(mapPtoB.getValue(player.getValue(turn).select).text)
                             mapPtoB.getValue(m).rotation = rotation.getValue(turn)
                             mapPtoB.getValue(player.getValue(turn).select).text = ""
-                            mainGame.changePiece(m, player.getValue(turn), mirror = !turn)
+                            MainGame.changePiece(m, player.getValue(turn), mirror = !turn)
                             // 持ち駒更新
                             val convertHandsName =
-                                mainGame.changeEnemyPiece(m, player.getValue(!turn), mirror = turn)
+                                MainGame.changeEnemyPiece(m, player.getValue(!turn), mirror = turn)
                             if (convertHandsName != "") {
                                 updateHands(convertHandsName)
                             }
@@ -168,17 +167,17 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 refreshBoard()
-                mainGame.clearMoveSelect(player)
+                MainGame.clearMoveSelect(player)
                 player.getValue(turn).piece.forEach { p ->
                     val pos = if (turn) p.pos else {
-                        mainGame.getMirrorPos(p.pos)
+                        MainGame.getMirrorPos(p.pos)
                     }
                     if (pos == mapBtoP.getValue(b)) {
                         Log.d("駒", "選択: ${b.text}")
                         b.setBackgroundResource(R.drawable.button_background_select)
                         player.getValue(turn).select = pos
                         player.getValue(turn).move =
-                            mainGame.getMovePos(
+                            MainGame.getMovePos(
                                 p,
                                 player.getValue(turn),
                                 player.getValue(!turn),
