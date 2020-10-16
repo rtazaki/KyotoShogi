@@ -90,6 +90,7 @@ object MainGame {
      * @param m 選択位置
      * @param player 相手駒情報
      * @param mirror 反転
+     * @return 取った駒の名前
      */
     fun changeEnemyPiece(m: Pos, player: Player, mirror: Boolean): CharSequence {
         var ret: CharSequence = ""
@@ -114,8 +115,9 @@ object MainGame {
     }
 
     /**
-     * 持ち駒共通化
+     * 表面を向くように持ち駒をそろえる。
      * @param name 駒名
+     * @return 表駒名
      */
     private fun convertHandsName(name: CharSequence): CharSequence {
         return when (name) {
