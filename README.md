@@ -13,3 +13,11 @@
 
 ## これから実装すること
 - 持ち駒を打てるようにする。
+
+## リファクタリング予定
+- select, moveをActivityに移す
+- listOfは、たぶん全部setOfに置き換え可能。(性質的にユニークなので。)
+- https://www.codeflow.site/ja/article/kotlin-sort
+↑ 範囲で判定するときは、ソートを使うことを考えたが、
+containtsAllを使えばいいので、どうせなら順番を気にしないSetのほうが一番しっくりくるし
+コードもスッキリするだろうと予想。
