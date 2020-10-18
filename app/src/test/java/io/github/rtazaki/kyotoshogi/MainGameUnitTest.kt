@@ -68,16 +68,16 @@ class MainGameUnitTest {
     @Test
     fun changePiecePositiveTest() {
         val player = MainGame.Player()
-        assertEquals("歩", player.piece[4].name)
-        assertEquals(MainGame.Pos(1, 5), player.piece[4].pos)
+        assertEquals("歩", player.pieces[4].name)
+        assertEquals(MainGame.Pos(1, 5), player.pieces[4].pos)
         MainGame.changePiece(
             select = MainGame.Pos(1, 5),
             m = MainGame.Pos(1, 4),
             player,
             false
         )
-        assertEquals("飛", player.piece[4].name)
-        assertEquals(MainGame.Pos(1, 4), player.piece[4].pos)
+        assertEquals("飛", player.pieces[4].name)
+        assertEquals(MainGame.Pos(1, 4), player.pieces[4].pos)
     }
 
     /**
@@ -87,16 +87,16 @@ class MainGameUnitTest {
     @Test
     fun changePieceTestNegativeTest() {
         val player = MainGame.Player()
-        assertEquals("金", player.piece[3].name)
-        assertEquals(MainGame.Pos(2, 5), player.piece[3].pos)
+        assertEquals("金", player.pieces[3].name)
+        assertEquals(MainGame.Pos(2, 5), player.pieces[3].pos)
         MainGame.changePiece(
             select = MainGame.Pos(4, 1),
             m = MainGame.Pos(3, 2),
             player,
             true
         )
-        assertEquals("桂", player.piece[3].name)
-        assertEquals(MainGame.Pos(3, 4), player.piece[3].pos)
+        assertEquals("桂", player.pieces[3].name)
+        assertEquals(MainGame.Pos(3, 4), player.pieces[3].pos)
     }
 
     /**
@@ -108,13 +108,13 @@ class MainGameUnitTest {
     @Test
     fun changeEnemyPiecePositiveTest() {
         val player = MainGame.Player()
-        assertEquals("と", player.piece[0].name)
-        assertEquals(MainGame.Pos(5, 5), player.piece[0].pos)
+        assertEquals("と", player.pieces[0].name)
+        assertEquals(MainGame.Pos(5, 5), player.pieces[0].pos)
         val getPiece = MainGame.changeEnemyPiece(
             MainGame.Pos(1, 1), player, true
         )
-        assertEquals(4, player.piece.size)
-        assertEquals("銀", player.piece[0].name)
+        assertEquals(4, player.pieces.size)
+        assertEquals("銀", player.pieces[0].name)
         assertEquals("香", getPiece)
     }
 
@@ -124,13 +124,13 @@ class MainGameUnitTest {
     @Test
     fun changeEnemyPieceNegativeTest() {
         val player = MainGame.Player()
-        assertEquals("銀", player.piece[1].name)
-        assertEquals(MainGame.Pos(4, 5), player.piece[1].pos)
+        assertEquals("銀", player.pieces[1].name)
+        assertEquals(MainGame.Pos(4, 5), player.pieces[1].pos)
         val getPiece = MainGame.changeEnemyPiece(
             MainGame.Pos(4, 5), player, false
         )
-        assertEquals(4, player.piece.size)
-        assertEquals("玉", player.piece[1].name)
+        assertEquals(4, player.pieces.size)
+        assertEquals("玉", player.pieces[1].name)
         assertEquals("銀", getPiece)
     }
 

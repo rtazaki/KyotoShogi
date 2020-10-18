@@ -6,7 +6,7 @@ package io.github.rtazaki.kyotoshogi
  */
 object MainGame {
     data class Player(
-        var piece: MutableList<Piece> = mutableListOf(
+        var pieces: MutableList<Piece> = mutableListOf(
             Piece("と", Pos(5, 5)),
             Piece("銀", Pos(4, 5)),
             Piece("玉", Pos(3, 5)),
@@ -65,7 +65,7 @@ object MainGame {
      */
     fun changePiece(select: Pos, m: Pos, player: Player, mirror: Boolean) {
         run loop@{
-            player.piece.forEach { p ->
+            player.pieces.forEach { p ->
                 if (mirror) {
                     if (p.pos == getMirrorPos(select)) {
                         p.pos = getMirrorPos(m)
@@ -93,17 +93,17 @@ object MainGame {
     fun changeEnemyPiece(m: Pos, player: Player, mirror: Boolean): CharSequence {
         var ret: CharSequence = ""
         run loop@{
-            player.piece.forEachIndexed { i, p ->
+            player.pieces.forEachIndexed { i, p ->
                 if (mirror) {
                     if (p.pos == getMirrorPos(m)) {
                         ret = convertHandsName(p.name)
-                        player.piece.removeAt(i)
+                        player.pieces.removeAt(i)
                         return@loop
                     }
                 } else {
                     if (p.pos == m) {
                         ret = convertHandsName(p.name)
-                        player.piece.removeAt(i)
+                        player.pieces.removeAt(i)
                         return@loop
                     }
                 }
@@ -365,7 +365,7 @@ object MainGame {
     ): Boolean {
         var ret = false
         run loop@{
-            player.piece.forEach {
+            player.pieces.forEach {
                 if (it.pos == Pos(column, row)) {
                     ret = true
                     return@loop
@@ -398,7 +398,7 @@ object MainGame {
     ): Boolean {
         var ret = false
         run loop@{
-            player.piece.forEach {
+            player.pieces.forEach {
                 val mirrorPos = getMirrorPos(it.pos)
                 if (mirrorPos == Pos(column, row)) {
                     if (mirror) {

@@ -16,13 +16,13 @@ class PawnUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         // 一旦空にする
         player.forEach {
-            it.value.piece.clear()
+            it.value.pieces.clear()
         }
-        player.getValue(true).piece.add(
+        player.getValue(true).pieces.add(
             MainGame.Piece("歩", MainGame.Pos(5, 5))
         )
         val move = MainGame.getMovePos(
-            player.getValue(true).piece[0],
+            player.getValue(true).pieces[0],
             player.getValue(true),
             player.getValue(false),
             false
@@ -38,13 +38,13 @@ class PawnUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         // 一旦空にする
         player.forEach {
-            it.value.piece.clear()
+            it.value.pieces.clear()
         }
-        player.getValue(true).piece.add(
+        player.getValue(true).pieces.add(
             MainGame.Piece("歩", MainGame.Pos(5, 2))
         )
         val move = MainGame.getMovePos(
-            player.getValue(true).piece[0],
+            player.getValue(true).pieces[0],
             player.getValue(true),
             player.getValue(false),
             false
@@ -60,13 +60,13 @@ class PawnUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         // 一旦空にする
         player.forEach {
-            it.value.piece.clear()
+            it.value.pieces.clear()
         }
-        player.getValue(true).piece.add(
+        player.getValue(true).pieces.add(
             MainGame.Piece("歩", MainGame.Pos(5, 1))
         )
         val move = MainGame.getMovePos(
-            player.getValue(true).piece[0],
+            player.getValue(true).pieces[0],
             player.getValue(true),
             player.getValue(false),
             false
@@ -82,16 +82,16 @@ class PawnUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         // 一旦空にする
         player.forEach {
-            it.value.piece.clear()
+            it.value.pieces.clear()
         }
-        player.getValue(true).piece.add(
+        player.getValue(true).pieces.add(
             MainGame.Piece("歩", MainGame.Pos(5, 5))
         )
-        player.getValue(false).piece.add(
+        player.getValue(false).pieces.add(
             MainGame.Piece("角", MainGame.Pos(5, 4))
         )
         val move = MainGame.getMovePos(
-            player.getValue(true).piece[0],
+            player.getValue(true).pieces[0],
             player.getValue(true),
             player.getValue(false),
             false
@@ -107,13 +107,13 @@ class PawnUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         // 一旦空にする
         player.forEach {
-            it.value.piece.clear()
+            it.value.pieces.clear()
         }
-        player.getValue(false).piece.add(
+        player.getValue(false).pieces.add(
             MainGame.Piece("歩", MainGame.Pos(5, 2))
         )
         val move = MainGame.getMovePos(
-            player.getValue(false).piece[0],
+            player.getValue(false).pieces[0],
             player.getValue(false),
             player.getValue(true),
             true
@@ -129,13 +129,13 @@ class PawnUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         // 一旦空にする
         player.forEach {
-            it.value.piece.clear()
+            it.value.pieces.clear()
         }
-        player.getValue(false).piece.add(
+        player.getValue(false).pieces.add(
             MainGame.Piece("歩", MainGame.Pos(5, 1))
         )
         val move = MainGame.getMovePos(
-            player.getValue(false).piece[0],
+            player.getValue(false).pieces[0],
             player.getValue(false),
             player.getValue(true),
             true

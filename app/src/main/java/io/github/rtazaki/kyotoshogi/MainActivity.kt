@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         val rotation = mapOf(true to 0.0F, false to 180.0F)
         // 初期配置
         player.forEach { (turn, player) ->
-            player.piece.forEach { p ->
+            player.pieces.forEach { p ->
                 val pos = if (turn) p.pos else {
                     MainGame.getMirrorPos(p.pos)
                 }
@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 refreshBoard()
                 MainGame.clearMoveSelect(player)
-                player.getValue(turn).piece.forEach { p ->
+                player.getValue(turn).pieces.forEach { p ->
                     val pos = if (turn) p.pos else {
                         MainGame.getMirrorPos(p.pos)
                     }
