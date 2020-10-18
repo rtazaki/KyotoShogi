@@ -19,7 +19,7 @@ class PutPieceDialogFragment(piece: CharSequence) : DialogFragment() {
             .setTitle("駒を選んでください")
             .setItems(items) { _, which ->
                 val mainActivity = activity as MainActivity
-                mainActivity.getPutPiece(items[which])
+                mainActivity.setPutPiece(items[which])
             }
             .setNegativeButton("Cancel", null)
         return builder.create()

@@ -135,10 +135,10 @@ class MainActivity : AppCompatActivity() {
     private var moves: MutableSet<MainGame.Pos> = mutableSetOf()
 
     /**
-     * ダイアログから、押された駒情報を取得
-     * @param putPiece
+     * ダイアログから、押された駒名を取得
+     * @param putPiece 押された駒名
      */
-    fun getPutPiece(putPiece: CharSequence) {
+    fun setPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
     }
 
