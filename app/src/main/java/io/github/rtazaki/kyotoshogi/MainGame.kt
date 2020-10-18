@@ -14,7 +14,6 @@ object MainGame {
             Piece("歩", Pos(1, 5)),
         ),
         var move: MutableList<Pos> = mutableListOf(),
-        var select: Pos = Pos(0, 0),
     )
 
     data class Piece(var name: CharSequence, var pos: Pos)
@@ -36,7 +35,6 @@ object MainGame {
     fun clearMoveSelect(player: Map<Boolean, Player>) {
         player.values.forEach {
             it.move.clear()
-            it.select = Pos(0, 0)
         }
     }
 
@@ -65,17 +63,17 @@ object MainGame {
      * @param player 自分駒情報
      * @param mirror 反転
      */
-    fun changePiece(m: Pos, player: Player, mirror: Boolean) {
+    fun changePiece(select: Pos, m: Pos, player: Player, mirror: Boolean) {
         run loop@{
             player.piece.forEach { p ->
                 if (mirror) {
-                    if (p.pos == getMirrorPos(player.select)) {
+                    if (p.pos == getMirrorPos(select)) {
                         p.pos = getMirrorPos(m)
                         p.name = invertPiece(p.name)
                         return@loop
                     }
                 } else {
-                    if (p.pos == player.select) {
+                    if (p.pos == select) {
                         p.pos = m
                         p.name = invertPiece(p.name)
                         return@loop

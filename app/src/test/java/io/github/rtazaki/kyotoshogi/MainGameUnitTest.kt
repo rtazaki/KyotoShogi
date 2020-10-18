@@ -37,14 +37,11 @@ class MainGameUnitTest {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.forEach {
             it.value.move = mutableListOf(MainGame.Pos(0, 0))
-            it.value.select = MainGame.Pos(1, 1)
             assertNotEquals(0, it.value.move.size)
-            assertNotEquals(MainGame.Pos(0, 0), it.value.select)
         }
         MainGame.clearMoveSelect(player)
         player.forEach {
             assertEquals(0, it.value.move.size)
-            assertEquals(MainGame.Pos(0, 0), it.value.select)
         }
     }
 
@@ -65,19 +62,20 @@ class MainGameUnitTest {
         assertEquals("玉", MainGame.invertPiece("玉"))
     }
 
-    // テスト書いてて気づいたこと
-    // selectの概念がゲーム要素ではなく、盤面要素な気がしてきた。
-    // TODO: selectはlatestと同じく、Activity側でもっておき、引数で渡すことを検討する。
     /**
      * 先手 1五歩 → 1四飛
      */
     @Test
     fun changePiecePositiveTest() {
         val player = MainGame.Player()
-        player.select = MainGame.Pos(1, 5)
         assertEquals("歩", player.piece[4].name)
         assertEquals(MainGame.Pos(1, 5), player.piece[4].pos)
-        MainGame.changePiece(MainGame.Pos(1, 4), player, false)
+        MainGame.changePiece(
+            select = MainGame.Pos(1, 5),
+            m = MainGame.Pos(1, 4),
+            player,
+            false
+        )
         assertEquals("飛", player.piece[4].name)
         assertEquals(MainGame.Pos(1, 4), player.piece[4].pos)
     }
@@ -89,10 +87,14 @@ class MainGameUnitTest {
     @Test
     fun changePieceTestNegativeTest() {
         val player = MainGame.Player()
-        player.select = MainGame.Pos(4, 1)
         assertEquals("金", player.piece[3].name)
         assertEquals(MainGame.Pos(2, 5), player.piece[3].pos)
-        MainGame.changePiece(MainGame.Pos(3, 2), player, true)
+        MainGame.changePiece(
+            select = MainGame.Pos(4, 1),
+            m = MainGame.Pos(3, 2),
+            player,
+            true
+        )
         assertEquals("桂", player.piece[3].name)
         assertEquals(MainGame.Pos(3, 4), player.piece[3].pos)
     }

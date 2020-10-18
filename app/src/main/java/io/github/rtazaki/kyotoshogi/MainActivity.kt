@@ -112,6 +112,11 @@ class MainActivity : AppCompatActivity() {
      */
     private var latest = MainGame.Pos(0, 0)
 
+    /**
+     * 選択した駒
+     */
+    private var select = MainGame.Pos(0, 0)
+
     fun getPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
     }
@@ -150,10 +155,10 @@ class MainActivity : AppCompatActivity() {
                         if (m == mapBtoP.getValue(b)) {
                             Log.d("駒", "ターン変更: ${mapBtoP.getValue(b)}")
                             mapPtoB.getValue(m).text =
-                                MainGame.invertPiece(mapPtoB.getValue(player.getValue(turn).select).text)
+                                MainGame.invertPiece(mapPtoB.getValue(select).text)
                             mapPtoB.getValue(m).rotation = rotation.getValue(turn)
-                            mapPtoB.getValue(player.getValue(turn).select).text = ""
-                            MainGame.changePiece(m, player.getValue(turn), mirror = !turn)
+                            mapPtoB.getValue(select).text = ""
+                            MainGame.changePiece(select, m, player.getValue(turn), mirror = !turn)
                             // 持ち駒更新
                             val convertHandsName =
                                 MainGame.changeEnemyPiece(m, player.getValue(!turn), mirror = turn)
@@ -175,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                     if (pos == mapBtoP.getValue(b)) {
                         Log.d("駒", "選択: ${b.text}")
                         b.setBackgroundResource(R.drawable.button_background_select)
-                        player.getValue(turn).select = pos
+                        select = pos
                         player.getValue(turn).move =
                             MainGame.getMovePos(
                                 p,
