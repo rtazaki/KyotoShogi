@@ -18,16 +18,14 @@ class PawnUnitTest {
         player.forEach {
             it.value.pieces.clear()
         }
-        player.getValue(true).pieces.add(
-            MainGame.Piece("歩", MainGame.Pos(5, 5))
-        )
+        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
         val move = MainGame.getMovePos(
-            player.getValue(true).pieces[0],
+            mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
             player.getValue(true),
             player.getValue(false),
             false
         )
-        Assert.assertEquals(listOf(MainGame.Pos(5, 4)), move)
+        Assert.assertEquals(setOf(MainGame.Pos(5, 4)), move)
     }
 
     /**
@@ -40,16 +38,14 @@ class PawnUnitTest {
         player.forEach {
             it.value.pieces.clear()
         }
-        player.getValue(true).pieces.add(
-            MainGame.Piece("歩", MainGame.Pos(5, 2))
-        )
+        player.getValue(true).pieces[MainGame.Pos(5, 2)] = "歩"
         val move = MainGame.getMovePos(
-            player.getValue(true).pieces[0],
+            mapOf(MainGame.Pos(5, 2) to "歩").entries.first(),
             player.getValue(true),
             player.getValue(false),
             false
         )
-        Assert.assertEquals(listOf(MainGame.Pos(5, 1)), move)
+        Assert.assertEquals(setOf(MainGame.Pos(5, 1)), move)
     }
 
     /**
@@ -62,16 +58,14 @@ class PawnUnitTest {
         player.forEach {
             it.value.pieces.clear()
         }
-        player.getValue(true).pieces.add(
-            MainGame.Piece("歩", MainGame.Pos(5, 1))
-        )
+        player.getValue(true).pieces[MainGame.Pos(5, 1)] = "歩"
         val move = MainGame.getMovePos(
-            player.getValue(true).pieces[0],
+            mapOf(MainGame.Pos(5, 1) to "歩").entries.first(),
             player.getValue(true),
             player.getValue(false),
             false
         )
-        Assert.assertEquals(listOf<MainGame.Pos>(), move)
+        Assert.assertEquals(setOf<MainGame.Pos>(), move)
     }
 
     /**
@@ -84,19 +78,15 @@ class PawnUnitTest {
         player.forEach {
             it.value.pieces.clear()
         }
-        player.getValue(true).pieces.add(
-            MainGame.Piece("歩", MainGame.Pos(5, 5))
-        )
-        player.getValue(false).pieces.add(
-            MainGame.Piece("角", MainGame.Pos(5, 4))
-        )
+        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(1, 2)] = "角"
         val move = MainGame.getMovePos(
-            player.getValue(true).pieces[0],
+            mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
             player.getValue(true),
             player.getValue(false),
             false
         )
-        Assert.assertEquals(listOf(MainGame.Pos(5, 4)), move)
+        Assert.assertEquals(setOf(MainGame.Pos(5, 4)), move)
     }
 
     /**
@@ -109,16 +99,14 @@ class PawnUnitTest {
         player.forEach {
             it.value.pieces.clear()
         }
-        player.getValue(false).pieces.add(
-            MainGame.Piece("歩", MainGame.Pos(5, 2))
-        )
+        player.getValue(false).pieces[MainGame.Pos(5, 2)] = "歩"
         val move = MainGame.getMovePos(
-            player.getValue(false).pieces[0],
+            mapOf(MainGame.Pos(5, 2) to "歩").entries.first(),
             player.getValue(false),
             player.getValue(true),
             true
         )
-        Assert.assertEquals(listOf(MainGame.Pos(1, 5)), move)
+        Assert.assertEquals(setOf(MainGame.Pos(1, 5)), move)
     }
 
     /**
@@ -131,15 +119,13 @@ class PawnUnitTest {
         player.forEach {
             it.value.pieces.clear()
         }
-        player.getValue(false).pieces.add(
-            MainGame.Piece("歩", MainGame.Pos(5, 1))
-        )
+        player.getValue(false).pieces[MainGame.Pos(5, 2)] = "歩"
         val move = MainGame.getMovePos(
-            player.getValue(false).pieces[0],
+            mapOf(MainGame.Pos(5, 1) to "歩").entries.first(),
             player.getValue(false),
             player.getValue(true),
             true
         )
-        Assert.assertEquals(listOf<MainGame.Pos>(), move)
+        Assert.assertEquals(setOf<MainGame.Pos>(), move)
     }
 }

@@ -83,13 +83,13 @@ class MainActivity : AppCompatActivity() {
      */
     private val hands by lazy {
         mapOf(
-            true to listOf(
+            true to setOf(
                 binding.player1Hands1,
                 binding.player1Hands2,
                 binding.player1Hands3,
                 binding.player1Hands4,
             ),
-            false to listOf(
+            false to setOf(
                 binding.player2Hands1,
                 binding.player2Hands2,
                 binding.player2Hands3,
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 移動可能範囲(位置)
      */
-    private var moves: MutableList<MainGame.Pos> = mutableListOf()
+    private var moves: MutableSet<MainGame.Pos> = mutableSetOf()
 
     fun getPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
@@ -137,11 +137,9 @@ class MainActivity : AppCompatActivity() {
         val rotation = mapOf(true to 0.0F, false to 180.0F)
         // 初期配置
         player.forEach { (turn, player) ->
-            player.pieces.forEach { p ->
-                val pos = if (turn) p.pos else {
-                    MainGame.getMirrorPos(p.pos)
-                }
-                mapPtoB.getValue(pos).text = p.name
+            player.pieces.forEach { piece ->
+                val pos = if (!turn) MainGame.getMirrorPos(piece.key) else piece.key
+                mapPtoB.getValue(pos).text = piece.value
                 mapPtoB.getValue(pos).rotation = rotation.getValue(turn)
             }
         }
@@ -157,50 +155,51 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // 盤処理
-        mapBtoP.keys.forEach { b ->
-            b.setOnClickListener {
-                run loop@{
-                    moves.forEach { m ->
-                        if (m == mapBtoP.getValue(b)) {
-                            Log.d("駒", "ターン変更: ${mapBtoP.getValue(b)}")
-                            mapPtoB.getValue(m).text =
-                                MainGame.invertPiece(mapPtoB.getValue(select).text)
-                            mapPtoB.getValue(m).rotation = rotation.getValue(turn)
-                            mapPtoB.getValue(select).text = ""
-                            MainGame.changePiece(select, m, player.getValue(turn), mirror = !turn)
-                            // 持ち駒更新
-                            val convertHandsName =
-                                MainGame.changeEnemyPiece(m, player.getValue(!turn), mirror = turn)
-                            if (convertHandsName != "") {
-                                updateHands(convertHandsName)
-                            }
-                            latest = m
-                            turn = !turn
-                            return@loop
-                        }
+        mapBtoP.keys.forEach { button ->
+            button.setOnClickListener {
+                val buttonPos = mapBtoP.getValue(button)
+                // 駒移動 → ターン変更
+                if (moves.containsAll(listOf(buttonPos))) {
+                    Log.d("駒", "ターン変更: $buttonPos")
+                    mapPtoB.getValue(buttonPos).text =
+                        MainGame.invertPiece(mapPtoB.getValue(select).text)
+                    mapPtoB.getValue(buttonPos).rotation = rotation.getValue(turn)
+                    mapPtoB.getValue(select).text = ""
+                    MainGame.changePiece(
+                        select, move = buttonPos, player.getValue(turn), mirror = !turn
+                    )
+                    // 持ち駒更新
+                    val convertHandsName =
+                        MainGame.changeEnemyPiece(
+                            move = buttonPos, player.getValue(!turn), mirror = turn
+                        )
+                    if (convertHandsName != "") {
+                        updateHands(convertHandsName)
                     }
+                    latest = buttonPos
+                    turn = !turn
                 }
+
                 refreshBoard()
-                player.getValue(turn).pieces.forEach { p ->
-                    val pos = if (turn) p.pos else {
-                        MainGame.getMirrorPos(p.pos)
-                    }
-                    if (pos == mapBtoP.getValue(b)) {
-                        Log.d("駒", "選択: ${b.text}")
-                        b.setBackgroundResource(R.drawable.button_background_select)
-                        select = pos
-                        moves =
-                            MainGame.getMovePos(
-                                p,
-                                player.getValue(turn),
-                                player.getValue(!turn),
-                                mirror = !turn
-                            )
-                        Log.d("駒", "稼働範囲: $moves")
-                        moves.forEach { m ->
-                            mapPtoB.getValue(m)
-                                .setBackgroundResource(R.drawable.button_background_move)
-                        }
+
+                // 駒選択
+                val piece =
+                    if (!turn) MainGame.getMirrorPos(buttonPos) else buttonPos
+                if (player.getValue(turn).pieces.contains(piece)) {
+                    Log.d("駒", "選択: ${button.text}")
+                    button.setBackgroundResource(R.drawable.button_background_select)
+                    select = buttonPos
+                    moves =
+                        MainGame.getMovePos(
+                            piece = mapOf(piece to button.text).entries.first(),
+                            player.getValue(turn),
+                            player.getValue(!turn),
+                            mirror = !turn
+                        )
+                    Log.d("駒", "稼働範囲: $moves")
+                    moves.forEach { move ->
+                        mapPtoB.getValue(move)
+                            .setBackgroundResource(R.drawable.button_background_move)
                     }
                 }
             }
