@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.github.rtazaki.kyotoshogi.databinding.ActivityMainBinding
 
+/**
+ * メイン画面
+ */
 class MainActivity : AppCompatActivity() {
     /**
      * ビューバインディング
@@ -13,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     /**
-     * ポジション ⇔ 画面
+     * ポジション → 画面
      * 画面配置的には、左上→右下だが、将棋は右上→左下
      * (column:筋, row:段で表現。 )
      * 棋譜は筋段(列行)で表現するため、ソフト側も同じロジックで実装を行う。
@@ -48,6 +51,11 @@ class MainActivity : AppCompatActivity() {
             MainGame.Pos(5, 5) to binding.board55,
         )
     }
+
+    /**
+     * 画面 → ポジション
+     * keyのみで使うときもある(盤面ボタンの一覧が欲しい時など)
+     */
     private val mapBtoP by lazy {
         mapOf(
             binding.board11 to MainGame.Pos(1, 1),
@@ -126,10 +134,18 @@ class MainActivity : AppCompatActivity() {
      */
     private var moves: MutableSet<MainGame.Pos> = mutableSetOf()
 
+    /**
+     * ダイアログから、押された駒情報を取得
+     * @param putPiece
+     */
     fun getPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
     }
 
+    /**
+     * onCreate
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -180,6 +196,7 @@ class MainActivity : AppCompatActivity() {
                     turn = !turn
                 }
 
+                // 盤面リフレッシュ
                 refreshBoard()
 
                 // 駒選択
