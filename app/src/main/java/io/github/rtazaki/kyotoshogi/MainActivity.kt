@@ -153,6 +153,11 @@ class MainActivity : AppCompatActivity() {
         val rotation = mapOf(true to 0.0F, false to 180.0F)
         // 初期配置
         player.forEach { (turn, player) ->
+            player.pieces[MainGame.Pos(5, 5)] = "と"
+            player.pieces[MainGame.Pos(4, 5)] = "銀"
+            player.pieces[MainGame.Pos(3, 5)] = "玉"
+            player.pieces[MainGame.Pos(2, 5)] = "金"
+            player.pieces[MainGame.Pos(1, 5)] = "歩"
             player.pieces.forEach { piece ->
                 val pos = if (!turn) MainGame.getMirrorPos(piece.key) else piece.key
                 mapPtoB.getValue(pos).text = piece.value

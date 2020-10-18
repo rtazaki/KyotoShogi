@@ -10,15 +10,7 @@ object MainGame {
      * Posをキーに駒検索をする。
      * @property pieces
      */
-    data class Player(
-        var pieces: MutableMap<Pos, CharSequence> = mutableMapOf(
-            Pos(5, 5) to "と",
-            Pos(4, 5) to "銀",
-            Pos(3, 5) to "玉",
-            Pos(2, 5) to "金",
-            Pos(1, 5) to "歩"
-        )
-    )
+    data class Player(var pieces: MutableMap<Pos, CharSequence> = mutableMapOf())
 
     /**
      * 位置情報クラス

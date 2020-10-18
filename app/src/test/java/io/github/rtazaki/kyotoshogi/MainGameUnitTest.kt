@@ -45,6 +45,7 @@ class MainGameUnitTest {
     @Test
     fun changePiecePositiveTest() {
         val player = MainGame.Player()
+        player.pieces[MainGame.Pos(1, 5)] = "歩"
         assertEquals("歩", player.pieces.getValue(MainGame.Pos(1, 5)))
         MainGame.changePiece(
             select = MainGame.Pos(1, 5),
@@ -63,6 +64,7 @@ class MainGameUnitTest {
     @Test
     fun changePieceTestNegativeTest() {
         val player = MainGame.Player()
+        player.pieces[MainGame.Pos(2, 5)] = "金"
         assertEquals("金", player.pieces.getValue(MainGame.Pos(2, 5)))
         MainGame.changePiece(
             select = MainGame.Pos(4, 1),
@@ -83,6 +85,11 @@ class MainGameUnitTest {
     @Test
     fun changeEnemyPiecePositiveTest() {
         val player = MainGame.Player()
+        player.pieces[MainGame.Pos(5, 5)] = "と"
+        player.pieces[MainGame.Pos(4, 5)] = "銀"
+        player.pieces[MainGame.Pos(3, 5)] = "玉"
+        player.pieces[MainGame.Pos(2, 5)] = "金"
+        player.pieces[MainGame.Pos(1, 5)] = "歩"
         assertEquals("と", player.pieces.getValue(MainGame.Pos(5, 5)))
         val convertHandsName = MainGame.changeEnemyPiece(
             move = MainGame.Pos(1, 1), player, true
@@ -97,6 +104,11 @@ class MainGameUnitTest {
     @Test
     fun changeEnemyPieceNegativeTest() {
         val player = MainGame.Player()
+        player.pieces[MainGame.Pos(5, 5)] = "と"
+        player.pieces[MainGame.Pos(4, 5)] = "銀"
+        player.pieces[MainGame.Pos(3, 5)] = "玉"
+        player.pieces[MainGame.Pos(2, 5)] = "金"
+        player.pieces[MainGame.Pos(1, 5)] = "歩"
         assertEquals("銀", player.pieces.getValue(MainGame.Pos(4, 5)))
         val convertHandsName = MainGame.changeEnemyPiece(
             move = MainGame.Pos(4, 5), player, false
