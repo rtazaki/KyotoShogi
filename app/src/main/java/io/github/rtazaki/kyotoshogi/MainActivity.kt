@@ -108,14 +108,23 @@ class MainActivity : AppCompatActivity() {
     private var turn = true
 
     /**
-     * 最後に動かした駒
+     * 最後に動かした駒(位置)
+     * (色付きかつ駒の向きにより、先手/後手が区別できる)
      */
     private var latest = MainGame.Pos(0, 0)
 
     /**
-     * 選択した駒
+     * 選択した駒(位置)
+     *  0,  0: 無選択
+     * -1, -1: 打ち駒
+     * それ以外: 盤面の駒
      */
     private var select = MainGame.Pos(0, 0)
+
+    /**
+     * 移動可能範囲(位置)
+     */
+    private var moves: MutableList<MainGame.Pos> = mutableListOf()
 
     fun getPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
@@ -151,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         mapBtoP.keys.forEach { b ->
             b.setOnClickListener {
                 run loop@{
-                    player.getValue(turn).move.forEach { m ->
+                    moves.forEach { m ->
                         if (m == mapBtoP.getValue(b)) {
                             Log.d("駒", "ターン変更: ${mapBtoP.getValue(b)}")
                             mapPtoB.getValue(m).text =
@@ -172,7 +181,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 refreshBoard()
-                MainGame.clearMoveSelect(player)
                 player.getValue(turn).pieces.forEach { p ->
                     val pos = if (turn) p.pos else {
                         MainGame.getMirrorPos(p.pos)
@@ -181,15 +189,15 @@ class MainActivity : AppCompatActivity() {
                         Log.d("駒", "選択: ${b.text}")
                         b.setBackgroundResource(R.drawable.button_background_select)
                         select = pos
-                        player.getValue(turn).move =
+                        moves =
                             MainGame.getMovePos(
                                 p,
                                 player.getValue(turn),
                                 player.getValue(!turn),
                                 mirror = !turn
                             )
-                        Log.d("駒", "稼働範囲: ${player.getValue(turn).move}")
-                        player.getValue(turn).move.forEach { m ->
+                        Log.d("駒", "稼働範囲: $moves")
+                        moves.forEach { m ->
                             mapPtoB.getValue(m)
                                 .setBackgroundResource(R.drawable.button_background_move)
                         }
@@ -227,5 +235,7 @@ class MainActivity : AppCompatActivity() {
             mapPtoB.getValue(latest)
                 .setBackgroundResource(R.drawable.button_background_latest)
         }
+        select = MainGame.Pos(0, 0)
+        moves.clear()
     }
 }

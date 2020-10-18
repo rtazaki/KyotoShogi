@@ -1,7 +1,6 @@
 package io.github.rtazaki.kyotoshogi
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
 /**
@@ -21,28 +20,6 @@ class MainGameUnitTest {
             MainGame.Pos(1, 1),
             MainGame.getMirrorPos(MainGame.Pos(5, 5))
         )
-    }
-
-    // テストを書いてて気づいたこと
-    // selectの概念と同じく、moveも盤面要素な気がしてきた。
-    // latest: 最後に移動した駒(色付きかつ駒の向きにより、先手/後手が区別できる)
-    // move: 駒の移動可能範囲。MainGameクラス内で反転処理や行けない場所は完全に閉じている。
-    // select: 選択した駒情報。打ち駒を実装する際に、select(0, 0)とか使えないかな?
-    // TODO: moveをActivity側でもっておき、引数で渡すことを検討する。(いずれこのメソッドを削除する。)
-    /**
-     * クリア処理
-     */
-    @Test
-    fun clearMoveSelectTest() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.forEach {
-            it.value.move = mutableListOf(MainGame.Pos(0, 0))
-            assertNotEquals(0, it.value.move.size)
-        }
-        MainGame.clearMoveSelect(player)
-        player.forEach {
-            assertEquals(0, it.value.move.size)
-        }
     }
 
     /**
@@ -72,7 +49,7 @@ class MainGameUnitTest {
         assertEquals(MainGame.Pos(1, 5), player.pieces[4].pos)
         MainGame.changePiece(
             select = MainGame.Pos(1, 5),
-            m = MainGame.Pos(1, 4),
+            move = MainGame.Pos(1, 4),
             player,
             false
         )
@@ -91,7 +68,7 @@ class MainGameUnitTest {
         assertEquals(MainGame.Pos(2, 5), player.pieces[3].pos)
         MainGame.changePiece(
             select = MainGame.Pos(4, 1),
-            m = MainGame.Pos(3, 2),
+            move = MainGame.Pos(3, 2),
             player,
             true
         )

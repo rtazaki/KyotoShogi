@@ -13,7 +13,6 @@ object MainGame {
             Piece("金", Pos(2, 5)),
             Piece("歩", Pos(1, 5)),
         ),
-        var move: MutableList<Pos> = mutableListOf(),
     )
 
     data class Piece(var name: CharSequence, var pos: Pos)
@@ -26,16 +25,6 @@ object MainGame {
      */
     fun getMirrorPos(pos: Pos): Pos {
         return Pos(6 - pos.column, 6 - pos.row)
-    }
-
-    /**
-     * 駒移動
-     * @param player プレイヤー情報
-     */
-    fun clearMoveSelect(player: Map<Boolean, Player>) {
-        player.values.forEach {
-            it.move.clear()
-        }
     }
 
     /**
@@ -59,22 +48,23 @@ object MainGame {
 
     /**
      * 駒移動
-     * @param m 選択位置
+     * @param select 選択した駒(位置)
+     * @param move 実際に選択した位置
      * @param player 自分駒情報
      * @param mirror 反転
      */
-    fun changePiece(select: Pos, m: Pos, player: Player, mirror: Boolean) {
+    fun changePiece(select: Pos, move: Pos, player: Player, mirror: Boolean) {
         run loop@{
             player.pieces.forEach { p ->
                 if (mirror) {
                     if (p.pos == getMirrorPos(select)) {
-                        p.pos = getMirrorPos(m)
+                        p.pos = getMirrorPos(move)
                         p.name = invertPiece(p.name)
                         return@loop
                     }
                 } else {
                     if (p.pos == select) {
-                        p.pos = m
+                        p.pos = move
                         p.name = invertPiece(p.name)
                         return@loop
                     }
