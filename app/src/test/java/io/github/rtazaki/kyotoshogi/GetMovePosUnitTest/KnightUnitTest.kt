@@ -98,21 +98,21 @@ class KnightUnitTest {
     }
 
     /**
-     * 相手駒がいても関係ない
+     * 移動先に自駒がいたら範囲外
      */
     @Test
     fun getMovePosKnight_6_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(true).pieces[MainGame.Pos(3, 3)] = "桂"
-        player.getValue(false).pieces[MainGame.Pos(4, 5)] = "銀"
-        player.getValue(false).pieces[MainGame.Pos(2, 5)] = "金"
+        player.getValue(true).pieces[MainGame.Pos(4, 1)] = "銀"
+        player.getValue(true).pieces[MainGame.Pos(2, 1)] = "金"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "桂").entries.first(),
             player.getValue(true),
             player.getValue(false),
             false
         )
-        val t = listOf(MainGame.Pos(4, 1), MainGame.Pos(2, 1))
+        val t = listOf<MainGame.Pos>()
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
