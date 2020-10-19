@@ -154,7 +154,7 @@ class KnightUnitTest {
     }
 
     /**
-     * 範囲外(2段)
+     * 後手_範囲外(2段)
      */
     @Test
     fun getMovePosKnight_9_Test() {
@@ -172,7 +172,7 @@ class KnightUnitTest {
     }
 
     /**
-     * 範囲外(1段)
+     * 後手_範囲外(1段)
      */
     @Test
     fun getMovePosKnight_10_Test() {
