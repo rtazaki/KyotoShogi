@@ -84,7 +84,7 @@ class GoldUnitTest {
     }
 
     /**
-     * 範囲外(5段)
+     * 境界(5段)
      */
     @Test
     fun getMovePosGold_4_Test() {
@@ -108,7 +108,7 @@ class GoldUnitTest {
     }
 
     /**
-     * 範囲外(1段)
+     * 境界(1段)
      */
     @Test
     fun getMovePosGold_5_Test() {
@@ -200,7 +200,7 @@ class GoldUnitTest {
     }
 
     /**
-     * 後手_範囲外(5段)
+     * 後手_境界(5段)
      */
     @Test
     fun getMovePosGold_9_Test() {
@@ -224,7 +224,7 @@ class GoldUnitTest {
     }
 
     /**
-     * 後手_範囲外(1段)
+     * 後手_境界(1段)
      */
     @Test
     fun getMovePosGold_10_Test() {

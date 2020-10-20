@@ -76,7 +76,7 @@ class SilverUnitTest {
     }
 
     /**
-     * 範囲外(5段)
+     * 境界(5段)
      */
     @Test
     fun getMovePosSilver_4_Test() {
@@ -98,7 +98,7 @@ class SilverUnitTest {
     }
 
     /**
-     * 範囲外(1段)
+     * 境界(1段)
      */
     @Test
     fun getMovePosSilver_5_Test() {
@@ -186,7 +186,7 @@ class SilverUnitTest {
     }
 
     /**
-     * 後手_範囲外(5段)
+     * 後手_境界(5段)
      */
     @Test
     fun getMovePosSilver_9_Test() {
@@ -208,7 +208,7 @@ class SilverUnitTest {
     }
 
     /**
-     * 後手_範囲外(1段)
+     * 後手_境界(1段)
      */
     @Test
     fun getMovePosSilver_10_Test() {
