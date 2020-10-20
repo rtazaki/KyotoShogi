@@ -100,8 +100,8 @@ class GoldUnitTest {
             MainGame.Pos(4, 4),
             MainGame.Pos(3, 4),
             MainGame.Pos(2, 4),
-            MainGame.Pos(2, 5),
-            MainGame.Pos(4, 5)
+            MainGame.Pos(4, 5),
+            MainGame.Pos(2, 5)
         )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
@@ -215,8 +215,8 @@ class GoldUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(5, 4),
             MainGame.Pos(4, 4),
+            MainGame.Pos(5, 4),
             MainGame.Pos(4, 3),
             MainGame.Pos(5, 2)
         )
@@ -238,11 +238,11 @@ class GoldUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(4, 2),
-            MainGame.Pos(3, 2),
             MainGame.Pos(2, 2),
-            MainGame.Pos(4, 1),
-            MainGame.Pos(2, 1)
+            MainGame.Pos(3, 2),
+            MainGame.Pos(4, 2),
+            MainGame.Pos(2, 1),
+            MainGame.Pos(4, 1)
         )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
@@ -262,8 +262,8 @@ class GoldUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(4, 5),
             MainGame.Pos(2, 5),
+            MainGame.Pos(4, 5),
             MainGame.Pos(3, 4)
         )
         assert(move.containsAll(t))
@@ -277,12 +277,12 @@ class GoldUnitTest {
     fun getMovePosGold_12_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(3, 3)] = "金"
-        player.getValue(false).pieces[MainGame.Pos(3, 4)] = "歩"
-        player.getValue(false).pieces[MainGame.Pos(4, 3)] = "歩"
-        player.getValue(false).pieces[MainGame.Pos(2, 3)] = "歩"
         player.getValue(false).pieces[MainGame.Pos(4, 2)] = "歩"
         player.getValue(false).pieces[MainGame.Pos(3, 2)] = "歩"
         player.getValue(false).pieces[MainGame.Pos(2, 2)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(4, 3)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(2, 3)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(3, 4)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "金").entries.first(),
             player.getValue(false),

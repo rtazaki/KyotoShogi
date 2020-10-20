@@ -20,7 +20,10 @@ class KnightUnitTest {
             player.getValue(false),
             false
         )
-        val t = listOf(MainGame.Pos(5, 3), MainGame.Pos(3, 3))
+        val t = listOf(
+            MainGame.Pos(5, 3),
+            MainGame.Pos(3, 3)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -38,7 +41,9 @@ class KnightUnitTest {
             player.getValue(false),
             false
         )
-        val t = listOf(MainGame.Pos(4, 1))
+        val t = listOf(
+            MainGame.Pos(4, 1)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -56,7 +61,9 @@ class KnightUnitTest {
             player.getValue(false),
             false
         )
-        val t = listOf(MainGame.Pos(2, 1))
+        val t = listOf(
+            MainGame.Pos(2, 1)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -130,7 +137,10 @@ class KnightUnitTest {
             player.getValue(true),
             true
         )
-        val t = listOf(MainGame.Pos(1, 3), MainGame.Pos(3, 3))
+        val t = listOf(
+            MainGame.Pos(1, 3),
+            MainGame.Pos(3, 3)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -148,7 +158,9 @@ class KnightUnitTest {
             player.getValue(true),
             true
         )
-        val t = listOf(MainGame.Pos(2, 5))
+        val t = listOf(
+            MainGame.Pos(2, 5)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -166,7 +178,9 @@ class KnightUnitTest {
             player.getValue(true),
             true
         )
-        val t = listOf(MainGame.Pos(4, 5))
+        val t = listOf(
+            MainGame.Pos(4, 5)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }

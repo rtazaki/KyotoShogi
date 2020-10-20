@@ -201,8 +201,8 @@ class SilverUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(5, 4),
             MainGame.Pos(4, 4),
+            MainGame.Pos(5, 4),
             MainGame.Pos(4, 2)
         )
         assert(move.containsAll(t))
@@ -223,9 +223,9 @@ class SilverUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(4, 2),
+            MainGame.Pos(2, 2),
             MainGame.Pos(3, 2),
-            MainGame.Pos(2, 2)
+            MainGame.Pos(4, 2)
         )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
@@ -245,25 +245,25 @@ class SilverUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(4, 4),
-            MainGame.Pos(2, 4)
+            MainGame.Pos(2, 4),
+            MainGame.Pos(4, 4)
         )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
 
     /**
-     * 移動先に自駒がいたら範囲外
+     * 後手_移動先に自駒がいたら範囲外
      */
     @Test
     fun getMovePosSilver_12_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(3, 3)] = "銀"
-        player.getValue(false).pieces[MainGame.Pos(4, 4)] = "歩"
-        player.getValue(false).pieces[MainGame.Pos(2, 4)] = "歩"
         player.getValue(false).pieces[MainGame.Pos(4, 2)] = "歩"
         player.getValue(false).pieces[MainGame.Pos(3, 2)] = "歩"
         player.getValue(false).pieces[MainGame.Pos(2, 2)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(4, 4)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(2, 4)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "銀").entries.first(),
             player.getValue(false),

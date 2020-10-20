@@ -20,7 +20,9 @@ class PawnUnitTest {
             player.getValue(false),
             false
         )
-        val t = listOf(MainGame.Pos(5, 4))
+        val t = listOf(
+            MainGame.Pos(5, 4)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -38,7 +40,9 @@ class PawnUnitTest {
             player.getValue(false),
             false
         )
-        val t = listOf(MainGame.Pos(5, 1))
+        val t = listOf(
+            MainGame.Pos(5, 1)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -93,7 +97,9 @@ class PawnUnitTest {
             player.getValue(true),
             true
         )
-        val t = listOf(MainGame.Pos(1, 2))
+        val t = listOf(
+            MainGame.Pos(1, 2)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
@@ -111,7 +117,9 @@ class PawnUnitTest {
             player.getValue(true),
             true
         )
-        val t = listOf(MainGame.Pos(1, 5))
+        val t = listOf(
+            MainGame.Pos(1, 5)
+        )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
