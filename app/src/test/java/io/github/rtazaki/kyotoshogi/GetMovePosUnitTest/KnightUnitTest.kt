@@ -206,4 +206,24 @@ class KnightUnitTest {
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
+
+    /**
+     * 後手_移動先に自駒がいたら範囲外
+     */
+    @Test
+    fun getMovePosKnight_12_Test() {
+        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        player.getValue(false).pieces[MainGame.Pos(3, 3)] = "桂"
+        player.getValue(false).pieces[MainGame.Pos(4, 1)] = "銀"
+        player.getValue(false).pieces[MainGame.Pos(2, 1)] = "金"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(3, 3) to "桂").entries.first(),
+            player.getValue(false),
+            player.getValue(true),
+            true
+        )
+        val t = listOf<MainGame.Pos>()
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
 }

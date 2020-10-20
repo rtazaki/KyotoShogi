@@ -133,4 +133,23 @@ class PawnUnitTest {
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
+
+    /**
+     * 後手_移動先に自駒がいたら範囲外
+     */
+    @Test
+    fun getMovePosPawn_8_Test() {
+        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(5, 4)] = "角"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
+            player.getValue(false),
+            player.getValue(true),
+            true
+        )
+        val t = listOf<MainGame.Pos>()
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
 }

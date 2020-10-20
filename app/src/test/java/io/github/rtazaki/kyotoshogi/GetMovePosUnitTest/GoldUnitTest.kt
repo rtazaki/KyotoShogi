@@ -269,4 +269,28 @@ class GoldUnitTest {
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
+
+    /**
+     * 後手_移動先に自駒がいたら範囲外
+     */
+    @Test
+    fun getMovePosGold_12_Test() {
+        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        player.getValue(false).pieces[MainGame.Pos(3, 3)] = "金"
+        player.getValue(false).pieces[MainGame.Pos(3, 4)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(4, 3)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(2, 3)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(4, 2)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(3, 2)] = "歩"
+        player.getValue(false).pieces[MainGame.Pos(2, 2)] = "歩"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(3, 3) to "金").entries.first(),
+            player.getValue(false),
+            player.getValue(true),
+            true
+        )
+        val t = listOf<MainGame.Pos>()
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
 }
