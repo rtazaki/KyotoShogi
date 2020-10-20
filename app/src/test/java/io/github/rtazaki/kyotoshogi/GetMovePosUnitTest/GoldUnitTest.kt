@@ -154,10 +154,35 @@ class GoldUnitTest {
     }
 
     /**
-     * 後手_境界(5筋)
+     * 後手_通常系
      */
     @Test
     fun getMovePosGold_7_Test() {
+        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        player.getValue(false).pieces[MainGame.Pos(3, 3)] = "金"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(3, 3) to "金").entries.first(),
+            player.getValue(false),
+            player.getValue(true),
+            true
+        )
+        val t = listOf(
+            MainGame.Pos(2, 4),
+            MainGame.Pos(3, 4),
+            MainGame.Pos(4, 4),
+            MainGame.Pos(2, 3),
+            MainGame.Pos(4, 3),
+            MainGame.Pos(3, 2)
+        )
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
+
+    /**
+     * 後手_境界(5筋)
+     */
+    @Test
+    fun getMovePosGold_8_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(5, 3)] = "金"
         val move = MainGame.getMovePos(
@@ -180,7 +205,7 @@ class GoldUnitTest {
      * 後手_境界(1筋)
      */
     @Test
-    fun getMovePosGold_8_Test() {
+    fun getMovePosGold_9_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(1, 3)] = "金"
         val move = MainGame.getMovePos(
@@ -203,7 +228,7 @@ class GoldUnitTest {
      * 後手_境界(5段)
      */
     @Test
-    fun getMovePosGold_9_Test() {
+    fun getMovePosGold_10_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(3, 5)] = "金"
         val move = MainGame.getMovePos(
@@ -227,7 +252,7 @@ class GoldUnitTest {
      * 後手_境界(1段)
      */
     @Test
-    fun getMovePosGold_10_Test() {
+    fun getMovePosGold_11_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(3, 1)] = "金"
         val move = MainGame.getMovePos(

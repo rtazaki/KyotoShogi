@@ -8,7 +8,7 @@ import org.junit.Test
  */
 class PawnUnitTest {
     /**
-     * 1歩
+     * 通常系
      */
     @Test
     fun getMovePosPawn_1_Test() {
@@ -81,10 +81,28 @@ class PawnUnitTest {
     }
 
     /**
-     * 後手_境界
+     * 後手_通常系
      */
     @Test
     fun getMovePosPawn_5_Test() {
+        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
+            player.getValue(false),
+            player.getValue(true),
+            true
+        )
+        val t = listOf(MainGame.Pos(1, 2))
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
+
+    /**
+     * 後手_境界
+     */
+    @Test
+    fun getMovePosPawn_6_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(5, 2)] = "歩"
         val move = MainGame.getMovePos(
@@ -102,7 +120,7 @@ class PawnUnitTest {
      * 後手_範囲外
      */
     @Test
-    fun getMovePosPawn_6_Test() {
+    fun getMovePosPawn_7_Test() {
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         player.getValue(false).pieces[MainGame.Pos(5, 1)] = "歩"
         val move = MainGame.getMovePos(
