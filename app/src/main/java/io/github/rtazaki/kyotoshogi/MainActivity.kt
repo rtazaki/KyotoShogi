@@ -151,6 +151,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         val rotation = mapOf(true to 0.0F, false to 180.0F)
+
         // 初期配置
         player.forEach { (turn, player) ->
             player.pieces[MainGame.Pos(5, 5)] = "と"
@@ -164,10 +165,13 @@ class MainActivity : AppCompatActivity() {
                 mapPtoB.getValue(pos).rotation = rotation.getValue(turn)
             }
         }
+
         // 打ち駒
         hands.forEach { (key, value) ->
             value.forEach { hands ->
                 hands.setOnClickListener {
+                    // 盤面リフレッシュ
+                    refreshBoard()
                     if (key == turn && hands.text.isNotBlank()) {
                         val dialog = PutPieceDialogFragment(hands.text)
                         dialog.show(supportFragmentManager, "PPDialog")
@@ -175,6 +179,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // 画面外
+        binding.root.setOnClickListener {
+            Log.d("駒", "画面外押下")
+            // 盤面リフレッシュ
+            refreshBoard()
+        }
+
         // 盤処理
         mapBtoP.keys.forEach { button ->
             button.setOnClickListener {
