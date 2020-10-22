@@ -50,15 +50,15 @@ object MainGame {
     /**
      * 駒移動
      * @param select 選択した駒(位置)
-     * @param move 実際に選択した位置
+     * @param button 実際に選択した位置
      * @param player 自分駒情報
      * @param mirror 反転
      */
-    fun changePiece(select: Pos, move: Pos, player: Player, mirror: Boolean) {
+    fun changePiece(select: Pos, button: Pos, player: Player, mirror: Boolean) {
         val s = if (mirror) getMirrorPos(select) else select
-        val m = if (mirror) getMirrorPos(move) else move
+        val b = if (mirror) getMirrorPos(button) else button
         if (player.pieces.containsKey(s)) {
-            player.pieces[m] = invertPiece(player.pieces.getValue(s))
+            player.pieces[b] = invertPiece(player.pieces.getValue(s))
             player.pieces.remove(s)
         }
     }

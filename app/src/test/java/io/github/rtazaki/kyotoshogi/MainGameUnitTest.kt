@@ -49,7 +49,7 @@ class MainGameUnitTest {
         assertEquals("歩", player.pieces.getValue(MainGame.Pos(1, 5)))
         MainGame.changePiece(
             select = MainGame.Pos(1, 5),
-            move = MainGame.Pos(1, 4),
+            button = MainGame.Pos(1, 4),
             player,
             false
         )
@@ -68,7 +68,7 @@ class MainGameUnitTest {
         assertEquals("金", player.pieces.getValue(MainGame.Pos(2, 5)))
         MainGame.changePiece(
             select = MainGame.Pos(4, 1),
-            move = MainGame.Pos(3, 2),
+            button = MainGame.Pos(3, 2),
             player,
             true
         )
