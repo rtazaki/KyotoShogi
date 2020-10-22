@@ -107,6 +107,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * プレイヤー
+     */
+    private val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+
+    /**
      * 手番
      * true: player1(先手)
      * false: player2(後手)
@@ -149,11 +154,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
         val rotation = mapOf(true to 0.0F, false to 180.0F)
 
         // 初期配置
-        player.forEach { (turn, player) ->
+        players.forEach { (turn, player) ->
             player.pieces[MainGame.Pos(5, 5)] = "と"
             player.pieces[MainGame.Pos(4, 5)] = "銀"
             player.pieces[MainGame.Pos(3, 5)] = "玉"
@@ -219,15 +223,15 @@ class MainActivity : AppCompatActivity() {
                 // 駒選択
                 val piece =
                     if (!turn) MainGame.getMirrorPos(buttonPos) else buttonPos
-                if (player.getValue(turn).pieces.contains(piece)) {
+                if (players.getValue(turn).pieces.contains(piece)) {
                     Log.d("駒", "選択: ${button.text}")
                     button.setBackgroundResource(R.drawable.button_background_select)
                     select = buttonPos
                     moves =
                         MainGame.getMovePos(
                             piece = mapOf(piece to button.text).entries.first(),
-                            player.getValue(turn),
-                            player.getValue(!turn),
+                            players.getValue(turn),
+                            players.getValue(!turn),
                             mirror = !turn
                         )
                     Log.d("駒", "稼働範囲: $moves")

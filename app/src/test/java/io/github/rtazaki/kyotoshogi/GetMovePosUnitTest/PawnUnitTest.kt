@@ -12,12 +12,12 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_1_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf(
@@ -32,12 +32,12 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_2_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 2)] = "歩"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 2)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 2) to "歩").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf(
@@ -52,12 +52,12 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_3_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 1)] = "歩"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 1)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 1) to "歩").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf<MainGame.Pos>()
@@ -70,13 +70,13 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_4_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
-        player.getValue(true).pieces[MainGame.Pos(5, 4)] = "角"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
+        players.getValue(true).pieces[MainGame.Pos(5, 4)] = "角"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf<MainGame.Pos>()
@@ -89,12 +89,12 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_5_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf(
@@ -109,12 +109,12 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_6_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 2)] = "歩"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 2)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 2) to "歩").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf(
@@ -129,12 +129,12 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_7_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 1)] = "歩"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 1)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 1) to "歩").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf<MainGame.Pos>()
@@ -147,13 +147,13 @@ class PawnUnitTest {
      */
     @Test
     fun getMovePosPawn_8_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
-        player.getValue(false).pieces[MainGame.Pos(5, 4)] = "角"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
+        players.getValue(false).pieces[MainGame.Pos(5, 4)] = "角"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "歩").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf<MainGame.Pos>()

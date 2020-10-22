@@ -12,12 +12,12 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_1_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf(
@@ -35,12 +35,12 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_2_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 2)] = "香"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 2)] = "香"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 2) to "香").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf(
@@ -55,12 +55,12 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_3_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 1)] = "香"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 1)] = "香"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 1) to "香").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf<MainGame.Pos>()
@@ -73,13 +73,13 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_4_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
-        player.getValue(true).pieces[MainGame.Pos(5, 3)] = "角"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
+        players.getValue(true).pieces[MainGame.Pos(5, 3)] = "角"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf(
@@ -94,13 +94,13 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_5_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
-        player.getValue(false).pieces[MainGame.Pos(1, 3)] = "角"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
+        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "角"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
-            player.getValue(true),
-            player.getValue(false),
+            players.getValue(true),
+            players.getValue(false),
             false
         )
         val t = listOf(
@@ -116,12 +116,12 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_6_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf(
@@ -139,12 +139,12 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_7_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 2)] = "香"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 2)] = "香"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 2) to "香").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf(
@@ -159,12 +159,12 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_8_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 1)] = "香"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 1)] = "香"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 1) to "香").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf<MainGame.Pos>()
@@ -177,13 +177,13 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_9_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
-        player.getValue(false).pieces[MainGame.Pos(5, 3)] = "角"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
+        players.getValue(false).pieces[MainGame.Pos(5, 3)] = "角"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf(
@@ -198,13 +198,13 @@ class LanceUnitTest {
      */
     @Test
     fun getMovePosLance_10_Test() {
-        val player = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        player.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
-        player.getValue(true).pieces[MainGame.Pos(1, 3)] = "角"
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
+        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "角"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
-            player.getValue(false),
-            player.getValue(true),
+            players.getValue(false),
+            players.getValue(true),
             true
         )
         val t = listOf(
