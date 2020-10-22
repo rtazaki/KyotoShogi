@@ -206,7 +206,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_v5"
         app:layout_constraintTop_toTopOf="@+id/guideline_h6" />
 
-    <!-- 手駒(持ち駒) -->
+    <!-- 持ち駒 -->
     <Button
         android:id="@+id/player1_hands1"
         android:layout_width="0dp"
@@ -247,7 +247,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_v3"
         app:layout_constraintTop_toTopOf="@+id/guideline_h8" />
 
-    <!-- 手駒(相手) -->
+    <!-- 持ち駒(相手) -->
     <Button
         android:id="@+id/player2_hands1"
         android:layout_width="0dp"
