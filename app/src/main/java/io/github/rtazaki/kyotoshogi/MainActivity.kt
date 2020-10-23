@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 持ち駒
      */
-    private val hands by lazy {
+    private val mapHands by lazy {
         mapOf(
             true to setOf(
                 binding.player1Hands1,
@@ -129,7 +129,6 @@ class MainActivity : AppCompatActivity() {
     /**
      * 選択した駒(位置)
      *  0,  0: 無選択
-     * -1, -1: 打ち駒
      * それ以外: 盤面の駒
      */
     private var select = MainGame.Pos(0, 0)
@@ -140,11 +139,24 @@ class MainActivity : AppCompatActivity() {
     private var moves: MutableSet<MainGame.Pos> = mutableSetOf()
 
     /**
+     * 押された駒名
+     * "": 押されていない
+     * それ以外: 押された駒名
+     */
+    private var putPieceName: CharSequence = ""
+
+    /**
      * ダイアログから、押された駒名を取得
      * @param putPiece 押された駒名
      */
     fun setPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
+        putPieceName = putPiece
+        moves = MainGame.getPutPiecePos(players)
+        moves.forEach { move ->
+            mapPtoB.getValue(move)
+                .setBackgroundResource(R.drawable.button_background_move)
+        }
     }
 
     /**
@@ -171,13 +183,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 打ち駒
-        hands.forEach { (key, value) ->
+        mapHands.forEach { (key, value) ->
             value.forEach { hands ->
                 hands.setOnClickListener {
                     // 盤面リフレッシュ
                     refreshBoard()
                     if (key == turn && hands.text.isNotBlank()) {
-                        val dialog = PutPieceDialogFragment(hands.text)
+                        val dialog = PutPieceDialogFragment(hands)
                         dialog.show(supportFragmentManager, "PPDialog")
                     }
                 }
@@ -198,21 +210,31 @@ class MainActivity : AppCompatActivity() {
                 // 駒移動 → ターン変更
                 if (moves.containsAll(listOf(buttonPos))) {
                     Log.d("駒", "ターン変更: $buttonPos")
-                    mapPtoB.getValue(buttonPos).text =
-                        MainGame.invertPiece(mapPtoB.getValue(select).text)
-                    mapPtoB.getValue(buttonPos).rotation = rotation.getValue(turn)
-                    mapPtoB.getValue(select).text = ""
-                    MainGame.changePiece(
-                        select, move = buttonPos, player.getValue(turn), mirror = !turn
-                    )
-                    // 持ち駒更新
-                    val convertHandsName =
-                        MainGame.changeEnemyPiece(
-                            move = buttonPos, player.getValue(!turn), mirror = turn
+
+                    // 打ち駒の場合
+                    if (putPieceName != "") {
+                        mapPtoB.getValue(buttonPos).text = putPieceName
+                        mapPtoB.getValue(buttonPos).rotation = rotation.getValue(turn)
+                        MainGame.addPutPiece(
+                            putPieceName, buttonPos, players.getValue(turn), mirror = !turn
                         )
-                    if (convertHandsName != "") {
-                        updateHands(convertHandsName)
+                    } else {
+                        mapPtoB.getValue(buttonPos).text =
+                            MainGame.invertPiece(mapPtoB.getValue(select).text)
+                        mapPtoB.getValue(buttonPos).rotation = rotation.getValue(turn)
+                        mapPtoB.getValue(select).text = ""
+                        MainGame.changePiece(
+                            select, buttonPos, players.getValue(turn), mirror = !turn
+                        )
+                        MainGame.changeEnemyPiece(
+                            buttonPos,
+                            players.getValue(!turn),
+                            players.getValue(turn),
+                            mirror = turn
+                        )
                     }
+                    // 持ち駒更新
+                    updateHands()
                     latest = buttonPos
                     turn = !turn
                 }
@@ -246,18 +268,28 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * 持ち駒更新
-     * @param convertHandsName 持ち駒
      */
-    private fun updateHands(convertHandsName: CharSequence) {
-        run loop@{
-            hands.getValue(turn).forEach {
-                if (it.text.isBlank()) {
-                    it.text = convertHandsName
-                    return@loop
-                } else if (it.text == convertHandsName) {
-                    val tmp = "${convertHandsName}×2"
-                    it.text = tmp
-                    return@loop
+    private fun updateHands() {
+        val h = players.getValue(turn).hands.toMutableMap()
+        mapHands.getValue(turn).forEach {
+            // 一旦コピーを取って、見つかったら消していく。
+            val name = it.text.replace(Regex("×\\d+"), "")
+            when {
+                h.containsKey(name) -> {
+                    if (h.getValue(name) > 1) {
+                        val tmp = "$name×${h.getValue(name)}"
+                        it.text = tmp
+                    } else {
+                        it.text = name
+                    }
+                    h.remove(name)
+                }
+                h.isNotEmpty() -> {
+                    it.text = h.entries.first().key
+                    h.remove(it.text)
+                }
+                else -> {
+                    it.text = ""
                 }
             }
         }
@@ -268,11 +300,17 @@ class MainActivity : AppCompatActivity() {
      */
     private fun refreshBoard() {
         mapBtoP.keys.forEach { it.setBackgroundResource(R.drawable.button_background) }
+        mapHands.values.forEach {
+            it.forEach { button ->
+                button.setBackgroundResource(R.drawable.button_background)
+            }
+        }
         if (latest != MainGame.Pos(0, 0)) {
             mapPtoB.getValue(latest)
                 .setBackgroundResource(R.drawable.button_background_latest)
         }
         select = MainGame.Pos(0, 0)
         moves.clear()
+        putPieceName = ""
     }
 }

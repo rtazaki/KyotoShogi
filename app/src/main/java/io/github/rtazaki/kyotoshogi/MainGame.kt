@@ -7,10 +7,13 @@ package io.github.rtazaki.kyotoshogi
 object MainGame {
     /**
      * Playerクラス
-     * Posをキーに駒検索をする。
-     * @property pieces
+     * @property pieces 自駒(駒位置: 駒名)
+     * @property hands 持ち駒(駒名: 個数)
      */
-    data class Player(var pieces: MutableMap<Pos, CharSequence> = mutableMapOf())
+    data class Player(
+        var pieces: MutableMap<Pos, CharSequence> = mutableMapOf(),
+        var hands: MutableMap<CharSequence, Int> = mutableMapOf()
+    )
 
     /**
      * 位置情報クラス
@@ -48,6 +51,26 @@ object MainGame {
     }
 
     /**
+     * 打ち駒を自駒に加える
+     * @param name 打ち駒名
+     * @param button 実際に選択した位置
+     * @param player 自分駒情報
+     * @param mirror 反転
+     */
+    fun addPutPiece(name: CharSequence, button: Pos, player: Player, mirror: Boolean) {
+        val b = if (mirror) getMirrorPos(button) else button
+        player.pieces[b] = name
+
+        // 持ち駒の個数を整理
+        val chn = convertHandsName(name)
+        if (player.hands.getValue(chn) < 2) {
+            player.hands.remove(chn)
+        } else {
+            player.hands[chn] = player.hands.getValue(chn).dec()
+        }
+    }
+
+    /**
      * 駒移動
      * @param select 選択した駒(位置)
      * @param button 実際に選択した位置
@@ -65,19 +88,23 @@ object MainGame {
 
     /**
      * 持ち駒取得処理
-     * @param move 実際に選択した位置
-     * @param player 相手駒情報
+     * @param button 実際に選択した位置
+     * @param p2 相手駒情報
+     * @param p1 自分駒情報
      * @param mirror 反転
-     * @return 取った駒の名前
      */
-    fun changeEnemyPiece(move: Pos, player: Player, mirror: Boolean): CharSequence {
-        val m = if (mirror) getMirrorPos(move) else move
-        if (player.pieces.containsKey(m)) {
-            val name = convertHandsName(player.pieces.getValue(m))
-            player.pieces.remove(m)
-            return name
+    fun changeEnemyPiece(button: Pos, p2: Player, p1: Player, mirror: Boolean) {
+        val b = if (mirror) getMirrorPos(button) else button
+        if (p2.pieces.containsKey(b)) {
+            // 持ち駒の個数を整理
+            val chn = convertHandsName(p2.pieces.getValue(b))
+            if (p1.hands.containsKey(chn)) {
+                p1.hands[chn] = p1.hands.getValue(chn).inc()
+            } else {
+                p1.hands[chn] = 1
+            }
+            p2.pieces.remove(b)
         }
-        return ""
     }
 
     /**
@@ -93,6 +120,26 @@ object MainGame {
             "飛", "歩" -> "飛"
             else -> "玉"
         }
+    }
+
+    /**
+     * 打ち駒の移動可能範囲を返す
+     * @param players 自駒と相手駒
+     * @return 打ち駒の移動可能範囲
+     */
+    fun getPutPiecePos(players: Map<Boolean, Player>): MutableSet<Pos> {
+        val move = mutableSetOf<Pos>()
+        (1..5).forEach { column ->
+            (1..5).forEach { row ->
+                val pos = Pos(column, row)
+                if (!players.getValue(true).pieces.containsKey(pos)) {
+                    if (!players.getValue(false).pieces.containsKey(getMirrorPos(pos))) {
+                        move.add(pos)
+                    }
+                }
+            }
+        }
+        return move
     }
 
     /**

@@ -40,6 +40,64 @@ class MainGameUnitTest {
     }
 
     /**
+     * 駒が単純に追加されることを確認。
+     */
+    @Test
+    fun addPutPiecePositiveTest() {
+        val player = MainGame.Player()
+        player.hands["金"] = 2
+
+        // 1個目
+        MainGame.addPutPiece(
+            name = "金",
+            button = MainGame.Pos(1, 4),
+            player,
+            false
+        )
+        assertEquals("金", player.pieces.getValue(MainGame.Pos(1, 4)))
+        assertEquals(1, player.hands["金"])
+
+        // 2個目
+        MainGame.addPutPiece(
+            name = "金",
+            button = MainGame.Pos(2, 5),
+            player,
+            false
+        )
+        assertEquals("金", player.pieces.getValue(MainGame.Pos(2, 5)))
+        assert(!player.hands.containsKey("金"))
+    }
+
+    /**
+     * 後手
+     */
+    @Test
+    fun addPutPieceNegativeTest() {
+        val player = MainGame.Player()
+        player.hands["金"] = 2
+
+        // 1個目
+        MainGame.addPutPiece(
+            name = "金",
+            button = MainGame.Pos(1, 4),
+            player,
+            true
+        )
+        assertEquals("金", player.pieces.getValue(MainGame.Pos(5, 2)))
+        assertEquals(1, player.hands["金"])
+
+        // 2個目
+        MainGame.addPutPiece(
+            name = "金",
+            button = MainGame.Pos(2, 5),
+            player,
+            true
+        )
+        assertEquals("金", player.pieces.getValue(MainGame.Pos(4, 1)))
+        assert(!player.hands.containsKey("金"))
+    }
+
+    /**
      * 先手 1五歩 → 1四飛
      */
     @Test
@@ -79,23 +137,40 @@ class MainGameUnitTest {
     /**
      * 先手が後手の と を取った場合、後手の と は無くなって、結果として 香 が手に入る。
      * 5五と(盤: 1一と) → 香
+     * 2五香(盤: 4一と) → 香
      * NOTE: このmirrorは結構ややこしい。そのほかのメソッドではturnの反対を渡すが、
      * このメソッドでは、盤から見たターン変更前なので、mirrorはturnそのものを渡す。
      */
     @Test
     fun changeEnemyPiecePositiveTest() {
-        val player = MainGame.Player()
-        player.pieces[MainGame.Pos(5, 5)] = "と"
-        player.pieces[MainGame.Pos(4, 5)] = "銀"
-        player.pieces[MainGame.Pos(3, 5)] = "玉"
-        player.pieces[MainGame.Pos(2, 5)] = "金"
-        player.pieces[MainGame.Pos(1, 5)] = "歩"
-        assertEquals("と", player.pieces.getValue(MainGame.Pos(5, 5)))
-        val convertHandsName = MainGame.changeEnemyPiece(
-            move = MainGame.Pos(1, 1), player, true
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "と"
+        players.getValue(false).pieces[MainGame.Pos(4, 5)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
+        players.getValue(false).pieces[MainGame.Pos(2, 5)] = "香"
+        players.getValue(false).pieces[MainGame.Pos(1, 5)] = "歩"
+
+        // 1個目
+        MainGame.changeEnemyPiece(
+            button = MainGame.Pos(1, 1),
+            players.getValue(false),
+            players.getValue(true),
+            true
         )
-        assertEquals(4, player.pieces.size)
-        assertEquals("香", convertHandsName)
+        assertEquals(4, players.getValue(false).pieces.size)
+        assertEquals("香", players.getValue(true).hands.entries.first().key)
+        assertEquals(1, players.getValue(true).hands.getValue("香"))
+
+        // 2個目
+        MainGame.changeEnemyPiece(
+            button = MainGame.Pos(4, 1),
+            players.getValue(false),
+            players.getValue(true),
+            true
+        )
+        assertEquals(3, players.getValue(false).pieces.size)
+        assertEquals("香", players.getValue(true).hands.entries.first().key)
+        assertEquals(2, players.getValue(true).hands.getValue("香"))
     }
 
     /**
@@ -103,18 +178,34 @@ class MainGameUnitTest {
      */
     @Test
     fun changeEnemyPieceNegativeTest() {
-        val player = MainGame.Player()
-        player.pieces[MainGame.Pos(5, 5)] = "と"
-        player.pieces[MainGame.Pos(4, 5)] = "銀"
-        player.pieces[MainGame.Pos(3, 5)] = "玉"
-        player.pieces[MainGame.Pos(2, 5)] = "金"
-        player.pieces[MainGame.Pos(1, 5)] = "歩"
-        assertEquals("銀", player.pieces.getValue(MainGame.Pos(4, 5)))
-        val convertHandsName = MainGame.changeEnemyPiece(
-            move = MainGame.Pos(4, 5), player, false
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "と"
+        players.getValue(true).pieces[MainGame.Pos(4, 5)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
+        players.getValue(true).pieces[MainGame.Pos(2, 5)] = "金"
+        players.getValue(true).pieces[MainGame.Pos(1, 5)] = "角"
+
+        // 1個目
+        MainGame.changeEnemyPiece(
+            button = MainGame.Pos(4, 5),
+            players.getValue(true),
+            players.getValue(false),
+            false
         )
-        assertEquals(4, player.pieces.size)
-        assertEquals("銀", convertHandsName)
+        assertEquals(4, players.getValue(true).pieces.size)
+        assertEquals("銀", players.getValue(false).hands.entries.first().key)
+        assertEquals(1, players.getValue(false).hands.getValue("銀"))
+
+        // 2個目
+        MainGame.changeEnemyPiece(
+            button = MainGame.Pos(1, 5),
+            players.getValue(true),
+            players.getValue(false),
+            false
+        )
+        assertEquals(3, players.getValue(true).pieces.size)
+        assertEquals("銀", players.getValue(false).hands.entries.first().key)
+        assertEquals(2, players.getValue(false).hands.getValue("銀"))
     }
 
     /**
@@ -138,5 +229,41 @@ class MainGameUnitTest {
         assertEquals("飛", method.invoke(MainGame, "飛"))
         assertEquals("飛", method.invoke(MainGame, "歩"))
         assertEquals("玉", method.invoke(MainGame, "玉"))
+    }
+
+    /**
+     * 打ち駒の移動可能範囲は先手/後手関係なく、
+     * 駒のあるところには打てないというだけ。
+     */
+    @Test
+    fun getPutPiecePosTest() {
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.forEach { (_, player) ->
+            player.pieces[MainGame.Pos(5, 5)] = "と"
+            player.pieces[MainGame.Pos(4, 5)] = "銀"
+            player.pieces[MainGame.Pos(3, 5)] = "玉"
+            player.pieces[MainGame.Pos(2, 5)] = "金"
+            player.pieces[MainGame.Pos(1, 5)] = "歩"
+        }
+        val move = MainGame.getPutPiecePos(players)
+        val t = listOf(
+            MainGame.Pos(5, 2),
+            MainGame.Pos(4, 2),
+            MainGame.Pos(3, 2),
+            MainGame.Pos(2, 2),
+            MainGame.Pos(1, 2),
+            MainGame.Pos(5, 3),
+            MainGame.Pos(4, 3),
+            MainGame.Pos(3, 3),
+            MainGame.Pos(2, 3),
+            MainGame.Pos(1, 3),
+            MainGame.Pos(5, 4),
+            MainGame.Pos(4, 4),
+            MainGame.Pos(3, 4),
+            MainGame.Pos(2, 4),
+            MainGame.Pos(1, 4)
+        )
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
     }
 }
