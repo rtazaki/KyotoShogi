@@ -251,6 +251,10 @@ object MainGame {
                             myPiece(p1, column, row, mirror, move)
                         }
                 }
+                if (!isIgnoreKing) {
+                    val enemyMove = getAllEnemyPieces(p1, p2, !mirror)
+                    move.removeAll(enemyMove)
+                }
             }
             "香" -> {
                 // 縦に真っ直ぐ
@@ -416,5 +420,32 @@ object MainGame {
             return true
         }
         return false
+    }
+
+    /**
+     * 相手駒の全移動可能範囲を返す
+     * @param p1 自分駒情報
+     * @param p2 相手駒情報
+     * @param mirror 反転
+     * @return 相手駒の全移動可能範囲
+     */
+    private fun getAllEnemyPieces(
+        p1: Player,
+        p2: Player,
+        mirror: Boolean
+    ): MutableSet<Pos> {
+        val enemyMove = mutableSetOf<Pos>()
+        p2.pieces.forEach {
+            enemyMove.addAll(
+                getMovePos(
+                    it,
+                    p2,
+                    p1,
+                    mirror,
+                    isIgnoreKing = true
+                )
+            )
+        }
+        return enemyMove
     }
 }

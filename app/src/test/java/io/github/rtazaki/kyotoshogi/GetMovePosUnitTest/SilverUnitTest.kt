@@ -274,6 +274,4 @@ class SilverUnitTest {
         assert(move.containsAll(t))
         assert(t.containsAll(move))
     }
-
-
 }
