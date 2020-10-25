@@ -148,13 +148,15 @@ object MainGame {
      * @param p1 自分駒情報
      * @param p2 相手駒情報
      * @param mirror 反転
+     * @param isIgnoreKing 相手玉を無視する(オプション)
      * @return 移動可能範囲
      */
     fun getMovePos(
         piece: Map.Entry<Pos, CharSequence>,
         p1: Player,
         p2: Player,
-        mirror: Boolean
+        mirror: Boolean,
+        isIgnoreKing: Boolean = false
     ): MutableSet<Pos> {
         val move = mutableSetOf<Pos>()
         when (piece.value) {
@@ -258,7 +260,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                     }
                 }
             }
@@ -271,7 +273,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                         column++
                         row--
                     }
@@ -284,7 +286,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                         column++
                         row++
                     }
@@ -297,7 +299,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                         column--
                         row--
                     }
@@ -310,7 +312,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                         column--
                         row++
                     }
@@ -324,7 +326,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                     }
                 }
                 // 下
@@ -334,7 +336,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                     }
                 }
                 // 左
@@ -344,7 +346,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                     }
                 }
                 // 右
@@ -354,7 +356,7 @@ object MainGame {
                         // 自駒にぶつかったら終了
                         if (myPiece(p1, column, row, mirror, move)) return@loop
                         // 相手駒にぶつかったら、その駒の位置をリストに含めて終了
-                        if (enemyPiece(p2, column, row, mirror, move)) return@loop
+                        if (enemyPiece(p2, column, row, mirror, move, isIgnoreKing)) return@loop
                     }
                 }
             }
@@ -378,10 +380,11 @@ object MainGame {
         mirror: Boolean,
         move: MutableSet<Pos>
     ): Boolean {
-        if (player.pieces.containsKey(Pos(column, row))) {
+        val p = Pos(column, row)
+        if (player.pieces.containsKey(p)) {
             return true
         }
-        val m = if (mirror) getMirrorPos(Pos(column, row)) else Pos(column, row)
+        val m = if (mirror) getMirrorPos(p) else p
         move.add(m)
         return false
     }
@@ -393,6 +396,7 @@ object MainGame {
      * @param row 段
      * @param mirror 反転
      * @param move 移動可能範囲
+     * @param isIgnoreKing 相手玉を無視する(オプション)
      * @return ぶつかったらtrue
      */
     private fun enemyPiece(
@@ -400,10 +404,14 @@ object MainGame {
         column: Int,
         row: Int,
         mirror: Boolean,
-        move: MutableSet<Pos>
+        move: MutableSet<Pos>,
+        isIgnoreKing: Boolean = false
     ): Boolean {
-        if (player.pieces.containsKey(getMirrorPos(Pos(column, row)))) {
-            val m = if (mirror) getMirrorPos(Pos(column, row)) else Pos(column, row)
+        val mp = getMirrorPos(Pos(column, row))
+        if (player.pieces.containsKey(mp)) {
+            // 相手玉を無視する
+            if (isIgnoreKing && player.pieces.getValue(mp) == "玉") return false
+            val m = if (mirror) mp else getMirrorPos(mp)
             move.add(m)
             return true
         }

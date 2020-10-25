@@ -96,7 +96,7 @@ class LanceUnitTest {
     fun getMovePosLance_5_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
         players.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
-        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
             players.getValue(true),
@@ -200,7 +200,7 @@ class LanceUnitTest {
     fun getMovePosLance_10_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
         players.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
-        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
             players.getValue(false),
@@ -210,6 +210,57 @@ class LanceUnitTest {
         val t = listOf(
             MainGame.Pos(1, 2),
             MainGame.Pos(1, 3)
+        )
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
+
+    /**
+     * 無視するフラグ有効かつ、移動先の相手駒が玉の場合はその玉を無視する。
+     */
+    @Test
+    fun getMovePosLance_11_Test() {
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(true).pieces[MainGame.Pos(5, 5)] = "香"
+        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "玉"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
+            players.getValue(true),
+            players.getValue(false),
+            false,
+            isIgnoreKing = true
+        )
+        val t = listOf(
+            MainGame.Pos(5, 4),
+            MainGame.Pos(5, 3),
+            MainGame.Pos(5, 2),
+            MainGame.Pos(5, 1)
+        )
+        assert(move.containsAll(t))
+        assert(t.containsAll(move))
+    }
+
+    /**
+     * 後手_無視するフラグ有効かつ、移動先の相手駒が玉の場合はその玉を無視する。
+     */
+    @Test
+    fun getMovePosLance_12_Test() {
+        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
+        players.getValue(false).pieces[MainGame.Pos(5, 5)] = "香"
+        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "玉"
+        val move = MainGame.getMovePos(
+            piece = mapOf(MainGame.Pos(5, 5) to "香").entries.first(),
+            players.getValue(false),
+            players.getValue(true),
+            true,
+            isIgnoreKing = true
+
+        )
+        val t = listOf(
+            MainGame.Pos(1, 2),
+            MainGame.Pos(1, 3),
+            MainGame.Pos(1, 4),
+            MainGame.Pos(1, 5)
         )
         assert(move.containsAll(t))
         assert(t.containsAll(move))
