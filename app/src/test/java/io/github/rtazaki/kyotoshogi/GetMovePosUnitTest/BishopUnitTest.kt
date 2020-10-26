@@ -183,7 +183,7 @@ class BishopUnitTest {
     fun getMovePosBishop_8_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
         players.getValue(true).pieces[MainGame.Pos(2, 4)] = "角"
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "玉"
+        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(1, 5)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(2, 4) to "角").entries.first(),
@@ -377,7 +377,7 @@ class BishopUnitTest {
     fun getMovePosBishop_16_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
         players.getValue(false).pieces[MainGame.Pos(2, 4)] = "角"
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "玉"
+        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(1, 5)] = "歩"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(2, 4) to "角").entries.first(),
@@ -386,62 +386,6 @@ class BishopUnitTest {
             true
         )
         val t = listOf(
-            MainGame.Pos(3, 3),
-            MainGame.Pos(5, 3),
-            MainGame.Pos(3, 1),
-            MainGame.Pos(5, 1)
-        )
-        assert(move.containsAll(t))
-        assert(t.containsAll(move))
-    }
-
-    /**
-     * 無視するフラグ有効かつ、移動先の相手駒が玉の場合はその玉を無視する。
-     */
-    @Test
-    fun getMovePosBishop_17_Test() {
-        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(2, 4)] = "角"
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "玉"
-        players.getValue(false).pieces[MainGame.Pos(1, 5)] = "歩"
-        val move = MainGame.getMovePos(
-            piece = mapOf(MainGame.Pos(2, 4) to "角").entries.first(),
-            players.getValue(true),
-            players.getValue(false),
-            false,
-            isIgnoreKing = true
-        )
-        val t = listOf(
-            MainGame.Pos(5, 1),
-            MainGame.Pos(4, 2),
-            MainGame.Pos(3, 3),
-            MainGame.Pos(1, 3),
-            MainGame.Pos(3, 5),
-            MainGame.Pos(1, 5)
-        )
-        assert(move.containsAll(t))
-        assert(t.containsAll(move))
-    }
-
-    /**
-     * 後手_無視するフラグ有効かつ、移動先の相手駒が玉の場合はその玉を無視する。
-     */
-    @Test
-    fun getMovePosBishop_18_Test() {
-        val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(2, 4)] = "角"
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "玉"
-        players.getValue(true).pieces[MainGame.Pos(1, 5)] = "歩"
-        val move = MainGame.getMovePos(
-            piece = mapOf(MainGame.Pos(2, 4) to "角").entries.first(),
-            players.getValue(false),
-            players.getValue(true),
-            true,
-            isIgnoreKing = true
-        )
-        val t = listOf(
-            MainGame.Pos(1, 5),
-            MainGame.Pos(2, 4),
             MainGame.Pos(3, 3),
             MainGame.Pos(5, 3),
             MainGame.Pos(3, 1),
