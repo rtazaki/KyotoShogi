@@ -148,13 +148,15 @@ object MainGame {
      * @param p1 自分駒情報
      * @param p2 相手駒情報
      * @param mirror 反転
+     * @param isIgnoreKing 相手玉を無視する(オプション)
      * @return 移動可能範囲
      */
     fun getMovePos(
         piece: Map.Entry<Pos, CharSequence>,
         p1: Player,
         p2: Player,
-        mirror: Boolean
+        mirror: Boolean,
+        isIgnoreKing: Boolean = false
     ): MutableSet<Pos> {
         val move = mutableSetOf<Pos>()
         when (piece.value) {
@@ -248,6 +250,15 @@ object MainGame {
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
+                }
+                if (!isIgnoreKing) {
+                    val removePos = mutableSetOf<Pos>()
+                    move.forEach {
+                        if (getKingMovePos(piece.key, it, p1, p2, !mirror)) {
+                            removePos.add(it)
+                        }
+                    }
+                    move.removeAll(removePos)
                 }
             }
             "香" -> {
@@ -408,6 +419,45 @@ object MainGame {
             val m = if (mirror) mp else Pos(column, row)
             move.add(m)
             return true
+        }
+        return false
+    }
+
+    /**
+     * 玉の移動可能範囲を返す
+     * @param king 自玉位置
+     * @param kingPos 自玉移動可能範囲(1つ)
+     * @param p1 自分駒情報
+     * @param p2 相手駒情報
+     * @param turn 手番
+     * @return ぶつかったらtrue
+     */
+    private fun getKingMovePos(
+        king: Pos,
+        kingPos: Pos,
+        p1: Player,
+        p2: Player,
+        turn: Boolean
+    ): Boolean {
+        // 玉を調整するために、コピーを取る。
+        val p1Copy = Player(p1.pieces.toMutableMap())
+        val p2Copy = Player(p2.pieces.toMutableMap())
+        // 移動可能範囲を出す際に邪魔になるので、自玉は一旦消す。
+        p1Copy.pieces.remove(king)
+
+        val mkp = if (!turn) kingPos else getMirrorPos(kingPos)
+        if (p2Copy.pieces.containsKey(mkp)) p2Copy.pieces.remove(mkp)
+        p2Copy.pieces.forEach {
+            val move = getMovePos(
+                it,
+                p2Copy,
+                p1Copy,
+                turn,
+                isIgnoreKing = true
+            )
+            if (move.contains(kingPos)) {
+                return true
+            }
         }
         return false
     }
