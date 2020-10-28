@@ -60,7 +60,6 @@ object MainGame {
     fun addPutPiece(name: CharSequence, button: Pos, player: Player, mirror: Boolean) {
         val b = if (mirror) getMirrorPos(button) else button
         player.pieces[b] = name
-
         // 持ち駒の個数を整理
         val chn = convertHandsName(name)
         if (player.hands.getValue(chn) < 2) {
@@ -148,7 +147,7 @@ object MainGame {
      * @param p1 自分駒情報
      * @param p2 相手駒情報
      * @param mirror 反転
-     * @param isIgnoreKing 相手玉を無視する(オプション)
+     * @param isRecursive 再帰フラグ(オプション)
      * @return 移動可能範囲
      */
     fun getMovePos(
@@ -156,7 +155,7 @@ object MainGame {
         p1: Player,
         p2: Player,
         mirror: Boolean,
-        isIgnoreKing: Boolean = false
+        isRecursive: Boolean = false
     ): MutableSet<Pos> {
         val move = mutableSetOf<Pos>()
         when (piece.value) {
@@ -250,15 +249,6 @@ object MainGame {
                             // 自駒にぶつかったら終了
                             myPiece(p1, column, row, mirror, move)
                         }
-                }
-                if (!isIgnoreKing) {
-                    val removePos = mutableSetOf<Pos>()
-                    move.forEach {
-                        if (getKingMovePos(piece.key, it, p1, p2, !mirror)) {
-                            removePos.add(it)
-                        }
-                    }
-                    move.removeAll(removePos)
                 }
             }
             "香" -> {
@@ -370,6 +360,15 @@ object MainGame {
                 }
             }
         }
+        if (!isRecursive) {
+            val removePos = mutableSetOf<Pos>()
+            move.forEach {
+                if (isKingCheck(piece, it, p1, p2, !mirror)) {
+                    removePos.add(it)
+                }
+            }
+            move.removeAll(removePos)
+        }
         return move
     }
 
@@ -425,37 +424,53 @@ object MainGame {
 
     /**
      * 玉の移動可能範囲を返す
-     * @param king 自玉位置
-     * @param kingPos 自玉移動可能範囲(1つ)
+     * @param piece 選択された駒情報
+     * @param m 移動可能範囲(1つ)
      * @param p1 自分駒情報
      * @param p2 相手駒情報
      * @param turn 手番
      * @return ぶつかったらtrue
      */
-    private fun getKingMovePos(
-        king: Pos,
-        kingPos: Pos,
+    fun isKingCheck(
+        piece: Map.Entry<Pos, CharSequence>,
+        m: Pos,
         p1: Player,
         p2: Player,
         turn: Boolean
     ): Boolean {
-        // 玉を調整するために、コピーを取る。
+        // p1Copy: 壊さないようにコピーを取る。
         val p1Copy = Player(p1.pieces.toMutableMap())
-        val p2Copy = Player(p2.pieces.toMutableMap())
-        // 移動可能範囲を出す際に邪魔になるので、自玉は一旦消す。
-        p1Copy.pieces.remove(king)
+        // 王手がかかる手順があるか確認するために、1手進める。
+        val mmp1 = if (turn) m else getMirrorPos(m)
+        p1Copy.pieces[mmp1] = piece.value
+        p1Copy.pieces.remove(piece.key)
+        // 1手進めた後で自玉位置を特定する。(玉だけではなく、どの駒が移動しているか分からないため。)
+        val king = p1Copy.pieces.filterValues { it.contains("玉") }
+        // 玉は通常1つしかいないが、テストケースには玉が含まれないパターンがあるため、countを見る。
+        if (king.count() != 1) {
+            return false
+        }
+        val mk = if (turn) king.entries.first().key else getMirrorPos(king.entries.first().key)
 
-        val mkp = if (!turn) kingPos else getMirrorPos(kingPos)
-        if (p2Copy.pieces.containsKey(mkp)) p2Copy.pieces.remove(mkp)
+        // p2Copy: 壊さないようにコピーを取る。
+        val p2Copy = Player(p2.pieces.toMutableMap())
+        // 移動した先に相手の駒がいたら、相手の駒を取り除く。
+        val mmp2 = if (!turn) m else getMirrorPos(m)
+        if (p2Copy.pieces.containsKey(mmp2)) {
+            p2Copy.pieces.remove(mmp2)
+        }
+
+        // 相手の駒の移動可能範囲を総当たりする
         p2Copy.pieces.forEach {
             val move = getMovePos(
                 it,
                 p2Copy,
                 p1Copy,
                 turn,
-                isIgnoreKing = true
+                isRecursive = true
             )
-            if (move.contains(kingPos)) {
+            // 移動可能範囲内に、玉がいたらtrueを返す。
+            if (move.contains(mk)) {
                 return true
             }
         }
