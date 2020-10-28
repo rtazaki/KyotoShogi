@@ -299,7 +299,12 @@ class MainActivity : AppCompatActivity() {
      * 盤面リフレッシュ
      */
     private fun refreshBoard() {
-        mapBtoP.keys.forEach { it.setBackgroundResource(R.drawable.button_background) }
+        mapBtoP.keys.forEach {
+            it.setBackgroundResource(R.drawable.button_background)
+            if (it.text == "") {
+                it.rotation = 0.0F
+            }
+        }
         mapHands.values.forEach {
             it.forEach { button ->
                 button.setBackgroundResource(R.drawable.button_background)
