@@ -179,6 +179,7 @@ class MainActivity : AppCompatActivity() {
                 val pos = if (!turn) MainGame.getMirrorPos(piece.key) else piece.key
                 mapPtoB.getValue(pos).text = piece.value
                 mapPtoB.getValue(pos).rotation = rotation.getValue(turn)
+                mapPtoB.getValue(pos).setBackgroundResource(R.drawable.button_background_piece)
             }
         }
 
@@ -299,15 +300,21 @@ class MainActivity : AppCompatActivity() {
      * 盤面リフレッシュ
      */
     private fun refreshBoard() {
-        mapBtoP.keys.forEach {
-            it.setBackgroundResource(R.drawable.button_background)
-            if (it.text == "") {
-                it.rotation = 0.0F
+        mapBtoP.keys.forEach { button ->
+            if (button.text == "") {
+                button.setBackgroundResource(R.drawable.button_background)
+                button.rotation = 0.0F
+            } else {
+                button.setBackgroundResource(R.drawable.button_background_piece)
             }
         }
         mapHands.values.forEach {
             it.forEach { button ->
-                button.setBackgroundResource(R.drawable.button_background)
+                if (button.text == "") {
+                    button.setBackgroundResource(R.drawable.button_background)
+                } else {
+                    button.setBackgroundResource(R.drawable.button_background_piece)
+                }
             }
         }
         if (latest != MainGame.Pos(0, 0)) {

@@ -13,14 +13,5 @@
                 android:color="#ff000000" />
         </shape>
     </item>
-    <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:centerColor="#aaff0000"
-                android:centerX="0.5"
-                android:centerY="0.5"
-                android:gradientRadius="10dp"
-                android:type="radial" />
-        </shape>
-    </item>
+    <item android:drawable="@drawable/ic_piece" />
 </layer-list>
