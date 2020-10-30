@@ -124,9 +124,15 @@ object MainGame {
     /**
      * 打ち駒の移動可能範囲を返す
      * @param players 自駒と相手駒
+     * @param putPiece 押された駒名
+     * @param turn 手番
      * @return 打ち駒の移動可能範囲
      */
-    fun getPutPiecePos(players: Map<Boolean, Player>): MutableSet<Pos> {
+    fun getPutPiecePos(
+        players: Map<Boolean, Player>,
+        putPiece: CharSequence = "",
+        turn: Boolean = false
+    ): MutableSet<Pos> {
         val move = mutableSetOf<Pos>()
         (1..5).forEach { column ->
             (1..5).forEach { row ->
@@ -138,6 +144,21 @@ object MainGame {
                 }
             }
         }
+        val removePos = mutableSetOf<Pos>()
+        val piece = mapOf(Pos(0, 0) to putPiece).entries.first()
+        move.forEach {
+            if (isKingCheck(
+                    piece,
+                    it,
+                    players.getValue(turn),
+                    players.getValue(!turn),
+                    turn
+                )
+            ) {
+                removePos.add(it)
+            }
+        }
+        move.removeAll(removePos)
         return move
     }
 
@@ -431,7 +452,7 @@ object MainGame {
      * @param turn 手番
      * @return ぶつかったらtrue
      */
-    fun isKingCheck(
+    private fun isKingCheck(
         piece: Map.Entry<Pos, CharSequence>,
         m: Pos,
         p1: Player,
@@ -443,7 +464,9 @@ object MainGame {
         // 王手がかかる手順があるか確認するために、1手進める。
         val mmp1 = if (turn) m else getMirrorPos(m)
         p1Copy.pieces[mmp1] = piece.value
-        p1Copy.pieces.remove(piece.key)
+        if (p1Copy.pieces.containsKey(piece.key)) {
+            p1Copy.pieces.remove(piece.key)
+        }
         // 1手進めた後で自玉位置を特定する。(玉だけではなく、どの駒が移動しているか分からないため。)
         val king = p1Copy.pieces.filterValues { it.contains("玉") }
         // 玉は通常1つしかいないが、テストケースには玉が含まれないパターンがあるため、countを見る。

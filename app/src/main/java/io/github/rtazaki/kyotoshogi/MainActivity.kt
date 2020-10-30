@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
     fun setPutPiece(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
         putPieceName = putPiece
-        moves = MainGame.getPutPiecePos(players)
+        moves = MainGame.getPutPiecePos(players, putPiece, turn)
         moves.forEach { move ->
             mapPtoB.getValue(move)
                 .setBackgroundResource(R.drawable.button_background_move)
