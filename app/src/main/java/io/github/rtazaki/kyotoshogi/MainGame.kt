@@ -123,9 +123,11 @@ object MainGame {
 
     /**
      * 打ち駒の移動可能範囲を返す
+     * 押された駒名と手番は移動制限をかけるために必要となった。
+     * (打ち駒の場合は、双方の駒が存在しない位置を探す処理だったため。)
      * @param players 自駒と相手駒
-     * @param putPiece 押された駒名
-     * @param turn 手番
+     * @param putPiece 押された駒名(オプション)
+     * @param turn 手番(オプション)
      * @return 打ち駒の移動可能範囲
      */
     fun getPutPiecePos(
@@ -160,6 +162,25 @@ object MainGame {
         }
         move.removeAll(removePos)
         return move
+    }
+
+    /**
+     * 詰み判定
+     * @param players 自駒と相手駒
+     * @param turn 手番
+     * @return 詰みならtrue
+     */
+    fun isCheckMate(players: Map<Boolean, Player>, turn: Boolean): Boolean {
+        val move = mutableSetOf<Pos>()
+        // 自駒の全移動可能範囲を取得する。
+        players.getValue(turn).pieces.forEach {
+            move.addAll(getMovePos(it, players.getValue(turn), players.getValue(!turn), turn))
+        }
+        // 持ち駒の全移動可能範囲を取得する。
+        if (players.getValue(turn).hands.count() > 0) {
+            move.addAll(getPutPiecePos(players, "", turn))
+        }
+        return move.isEmpty()
     }
 
     /**
@@ -444,7 +465,7 @@ object MainGame {
     }
 
     /**
-     * 玉の移動可能範囲を返す
+     * 1手進めて玉が王手されていないか確認する
      * @param piece 選択された駒情報
      * @param m 移動可能範囲(1つ)
      * @param p1 自分駒情報

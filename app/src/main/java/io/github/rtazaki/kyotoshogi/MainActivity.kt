@@ -238,6 +238,10 @@ class MainActivity : AppCompatActivity() {
                     updateHands()
                     latest = buttonPos
                     turn = !turn
+                    // 詰み判定
+                    if (MainGame.isCheckMate(players, turn)) {
+                        Log.d("駒", "詰み")
+                    }
                 }
 
                 // 盤面リフレッシュ
