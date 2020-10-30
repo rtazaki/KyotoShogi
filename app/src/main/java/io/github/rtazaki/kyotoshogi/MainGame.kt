@@ -107,7 +107,7 @@ object MainGame {
     }
 
     /**
-     * 表面を向くように持ち駒をそろえる。
+     * 表面を向くように持ち駒をそろえる
      * @param name 駒名
      * @return 表駒名
      */
@@ -123,16 +123,14 @@ object MainGame {
 
     /**
      * 打ち駒の移動可能範囲を返す
-     * 押された駒名と手番は移動制限をかけるために必要となった。
+     * 手番は移動制限をかけるために必要となった。
      * (打ち駒の場合は、双方の駒が存在しない位置を探す処理だったため。)
      * @param players 自駒と相手駒
-     * @param putPiece 押された駒名(オプション)
      * @param turn 手番(オプション)
      * @return 打ち駒の移動可能範囲
      */
     fun getPutPiecePos(
         players: Map<Boolean, Player>,
-        putPiece: CharSequence = "",
         turn: Boolean = false
     ): MutableSet<Pos> {
         val move = mutableSetOf<Pos>()
@@ -147,7 +145,7 @@ object MainGame {
             }
         }
         val removePos = mutableSetOf<Pos>()
-        val piece = mapOf(Pos(0, 0) to putPiece).entries.first()
+        val piece = mapOf<Pos, CharSequence>(Pos(0, 0) to "").entries.first()
         move.forEach {
             if (isKingCheck(
                     piece,
@@ -178,7 +176,7 @@ object MainGame {
         }
         // 持ち駒の全移動可能範囲を取得する。
         if (players.getValue(turn).hands.count() > 0) {
-            move.addAll(getPutPiecePos(players, "", turn))
+            move.addAll(getPutPiecePos(players, turn))
         }
         return move.isEmpty()
     }
