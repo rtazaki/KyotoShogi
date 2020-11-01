@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity() {
      * ダイアログから、押された駒名を取得
      * @param putPiece 押された駒名
      */
-    fun setPutPiece(putPiece: CharSequence) {
+    fun setPutPieceName(putPiece: CharSequence) {
         Log.d("駒", "putPiece: $putPiece")
         putPieceName = putPiece
         moves = MainGame.getPutPiecePos(players, turn)
@@ -190,8 +190,13 @@ class MainActivity : AppCompatActivity() {
                     // 盤面リフレッシュ
                     refreshBoard()
                     if (key == turn && hands.text.isNotBlank()) {
-                        val dialog = PutPieceDialogFragment(hands)
-                        dialog.show(supportFragmentManager, "PPDialog")
+                        hands.setBackgroundResource(R.drawable.button_background_select)
+                        // 打ち駒可能な場合のみダイアログを表示する。
+                        moves = MainGame.getPutPiecePos(players, turn)
+                        if (moves.isNotEmpty()) {
+                            val dialog = PutPieceDialogFragment(hands.text)
+                            dialog.show(supportFragmentManager, "PPDialog")
+                        }
                     }
                 }
             }
