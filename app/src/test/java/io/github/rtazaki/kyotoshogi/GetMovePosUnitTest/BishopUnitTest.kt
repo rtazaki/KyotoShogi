@@ -13,7 +13,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_1_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "角").entries.first(),
             players.getValue(true),
@@ -40,7 +40,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_2_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(5, 3)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "角").entries.first(),
             players.getValue(true),
@@ -63,7 +63,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_3_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "角").entries.first(),
             players.getValue(true),
@@ -86,7 +86,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_4_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 5) to "角").entries.first(),
             players.getValue(true),
@@ -109,7 +109,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_5_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 1)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "角").entries.first(),
             players.getValue(true),
@@ -132,7 +132,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_6_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(4, 2)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(4, 2) to "角").entries.first(),
             players.getValue(true),
@@ -157,7 +157,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_7_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(true).pieces[MainGame.Pos(4, 2)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(2, 2)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(5, 5)] = "歩"
@@ -182,7 +182,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_8_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(2, 4)] = "角"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(false).pieces[MainGame.Pos(3, 3)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(1, 5)] = "歩"
         val move = MainGame.getMovePos(
@@ -207,7 +207,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_9_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "角").entries.first(),
             players.getValue(false),
@@ -234,7 +234,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_10_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(5, 3)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "角").entries.first(),
             players.getValue(false),
@@ -257,7 +257,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_11_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "角").entries.first(),
             players.getValue(false),
@@ -280,7 +280,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_12_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 5) to "角").entries.first(),
             players.getValue(false),
@@ -303,7 +303,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_13_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 1)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "角").entries.first(),
             players.getValue(false),
@@ -326,7 +326,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_14_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(4, 2)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(4, 2) to "角").entries.first(),
             players.getValue(false),
@@ -351,7 +351,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_15_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(false).pieces[MainGame.Pos(4, 2)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(2, 2)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(5, 5)] = "歩"
@@ -376,7 +376,7 @@ class BishopUnitTest {
     @Test
     fun getMovePosBishop_16_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(2, 4)] = "角"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(true).pieces[MainGame.Pos(3, 3)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(1, 5)] = "歩"
         val move = MainGame.getMovePos(

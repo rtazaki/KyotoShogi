@@ -13,7 +13,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_1_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(4, 5)] = "桂"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(4, 5) to "桂").entries.first(),
             players.getValue(true),
@@ -34,7 +34,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_2_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(5, 3)] = "桂"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "桂").entries.first(),
             players.getValue(true),
@@ -54,7 +54,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_3_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "桂"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "桂").entries.first(),
             players.getValue(true),
@@ -74,7 +74,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_4_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 2)] = "桂"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 2) to "桂").entries.first(),
             players.getValue(true),
@@ -92,7 +92,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_5_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 1)] = "桂"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "桂").entries.first(),
             players.getValue(true),
@@ -110,7 +110,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_6_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "桂"
+        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "玉"
         players.getValue(true).pieces[MainGame.Pos(4, 1)] = "銀"
         players.getValue(true).pieces[MainGame.Pos(2, 1)] = "金"
         val move = MainGame.getMovePos(
@@ -130,7 +130,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_7_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(4, 5)] = "桂"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(4, 5) to "桂").entries.first(),
             players.getValue(false),
@@ -151,7 +151,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_8_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(5, 3)] = "桂"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "桂").entries.first(),
             players.getValue(false),
@@ -171,7 +171,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_9_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "桂"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "桂").entries.first(),
             players.getValue(false),
@@ -191,7 +191,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_10_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 2)] = "桂"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 2) to "桂").entries.first(),
             players.getValue(false),
@@ -209,7 +209,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_11_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 1)] = "桂"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "桂").entries.first(),
             players.getValue(false),
@@ -227,7 +227,7 @@ class KnightUnitTest {
     @Test
     fun getMovePosKnight_12_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "桂"
+        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "玉"
         players.getValue(false).pieces[MainGame.Pos(4, 1)] = "銀"
         players.getValue(false).pieces[MainGame.Pos(2, 1)] = "金"
         val move = MainGame.getMovePos(

@@ -13,7 +13,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_1_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "銀").entries.first(),
             players.getValue(true),
@@ -37,7 +37,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_2_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(5, 3)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "銀").entries.first(),
             players.getValue(true),
@@ -59,7 +59,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_3_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "銀").entries.first(),
             players.getValue(true),
@@ -81,7 +81,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_4_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 5) to "銀").entries.first(),
             players.getValue(true),
@@ -103,7 +103,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_5_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 1)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "銀").entries.first(),
             players.getValue(true),
@@ -124,7 +124,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_6_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "銀"
+        players.getValue(true).pieces[MainGame.Pos(1, 1)] = "玉"
         players.getValue(true).pieces[MainGame.Pos(4, 2)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(3, 2)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(2, 2)] = "歩"
@@ -147,7 +147,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_7_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "銀").entries.first(),
             players.getValue(false),
@@ -171,7 +171,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_8_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(5, 3)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "銀").entries.first(),
             players.getValue(false),
@@ -193,7 +193,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_9_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "銀").entries.first(),
             players.getValue(false),
@@ -215,7 +215,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_10_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 5) to "銀").entries.first(),
             players.getValue(false),
@@ -237,7 +237,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_11_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 1)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(1, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "銀").entries.first(),
             players.getValue(false),
@@ -258,7 +258,7 @@ class SilverUnitTest {
     @Test
     fun getMovePosSilver_12_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "銀"
+        players.getValue(false).pieces[MainGame.Pos(1, 1)] = "玉"
         players.getValue(false).pieces[MainGame.Pos(4, 2)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(3, 2)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(2, 2)] = "歩"

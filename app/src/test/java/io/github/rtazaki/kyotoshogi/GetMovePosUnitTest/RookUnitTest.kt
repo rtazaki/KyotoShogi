@@ -13,7 +13,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_1_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "飛").entries.first(),
             players.getValue(true),
@@ -40,7 +40,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_2_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(5, 3)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "飛").entries.first(),
             players.getValue(true),
@@ -67,7 +67,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_3_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(1, 3)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "飛").entries.first(),
             players.getValue(true),
@@ -94,7 +94,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_4_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 5)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 5) to "飛").entries.first(),
             players.getValue(true),
@@ -121,7 +121,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_5_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 1)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "飛").entries.first(),
             players.getValue(true),
@@ -148,7 +148,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_6_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(4, 2)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(4, 2) to "飛").entries.first(),
             players.getValue(true),
@@ -175,7 +175,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_7_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(3, 3)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(true).pieces[MainGame.Pos(3, 1)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(4, 3)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(1, 3)] = "歩"
@@ -200,7 +200,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_8_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(true).pieces[MainGame.Pos(2, 4)] = "飛"
+        players.getValue(true).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(false).pieces[MainGame.Pos(5, 2)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(4, 4)] = "歩"
         val move = MainGame.getMovePos(
@@ -229,7 +229,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_9_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 3) to "飛").entries.first(),
             players.getValue(false),
@@ -256,7 +256,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_10_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(5, 3)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(5, 3) to "飛").entries.first(),
             players.getValue(false),
@@ -283,7 +283,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_11_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(1, 3)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(1, 3) to "飛").entries.first(),
             players.getValue(false),
@@ -310,7 +310,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_12_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 5)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 5) to "飛").entries.first(),
             players.getValue(false),
@@ -337,7 +337,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_13_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 1)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 5)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(3, 1) to "飛").entries.first(),
             players.getValue(false),
@@ -364,7 +364,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_14_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(4, 2)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         val move = MainGame.getMovePos(
             piece = mapOf(MainGame.Pos(4, 2) to "飛").entries.first(),
             players.getValue(false),
@@ -391,7 +391,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_15_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(3, 3)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(false).pieces[MainGame.Pos(3, 1)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(4, 3)] = "歩"
         players.getValue(false).pieces[MainGame.Pos(1, 3)] = "歩"
@@ -416,7 +416,7 @@ class RookUnitTest {
     @Test
     fun getMovePosRook_16_Test() {
         val players = mapOf(true to MainGame.Player(), false to MainGame.Player())
-        players.getValue(false).pieces[MainGame.Pos(2, 4)] = "飛"
+        players.getValue(false).pieces[MainGame.Pos(2, 1)] = "玉"
         players.getValue(true).pieces[MainGame.Pos(5, 2)] = "歩"
         players.getValue(true).pieces[MainGame.Pos(4, 4)] = "歩"
         val move = MainGame.getMovePos(

@@ -175,7 +175,7 @@ object MainGame {
             move.addAll(getMovePos(it, players.getValue(turn), players.getValue(!turn), turn))
         }
         // 持ち駒の全移動可能範囲を取得する。
-        if (players.getValue(turn).hands.count() > 0) {
+        if (players.getValue(turn).hands.isNotEmpty()) {
             move.addAll(getPutPiecePos(players, turn))
         }
         return move.isEmpty()
@@ -488,10 +488,6 @@ object MainGame {
         }
         // 1手進めた後で自玉位置を特定する。(玉だけではなく、どの駒が移動しているか分からないため。)
         val king = p1Copy.pieces.filterValues { it.contains("玉") }
-        // 玉は通常1つしかいないが、テストケースには玉が含まれないパターンがあるため、countを見る。
-        if (king.count() != 1) {
-            return false
-        }
         val mk = if (turn) king.entries.first().key else getMirrorPos(king.entries.first().key)
 
         // p2Copy: 壊さないようにコピーを取る。
