@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity() {
                         // 打ち駒可能な場合のみダイアログを表示する。
                         moves = MainGame.getPutPiecePos(players, turn)
                         if (moves.isNotEmpty()) {
-                            val dialog = PutPieceDialogFragment(hands.text)
+                            val dialog = PutPieceDialogFragment(hands.text, turn)
                             dialog.show(supportFragmentManager, "PPDialog")
                         }
                     }
