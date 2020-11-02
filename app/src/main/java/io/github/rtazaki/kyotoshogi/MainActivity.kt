@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity() {
                         moves = MainGame.getPutPiecePos(players, turn)
                         if (moves.isNotEmpty()) {
                             val dialog = PutPieceDialogFragment(hands.text, turn)
-                            dialog.show(supportFragmentManager, "PPDialog")
+                            dialog.show(supportFragmentManager, "PutPieceDialog")
                         }
                     }
                 }
@@ -246,6 +246,8 @@ class MainActivity : AppCompatActivity() {
                     // 詰み判定
                     if (MainGame.isCheckMate(players, turn)) {
                         Log.d("駒", "詰み")
+                        val dialog = CheckMateDialogFragment(turn)
+                        dialog.show(supportFragmentManager, "CheckMateDialog")
                     }
                 }
 
