@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
             button.setOnClickListener {
                 val buttonPos = mapBtoP.getValue(button)
                 // 駒移動 → ターン変更
-                if (moves.containsAll(listOf(buttonPos))) {
+                if (moves.contains(buttonPos)) {
                     Log.d("駒", "ターン変更: $buttonPos")
 
                     // 打ち駒の場合
